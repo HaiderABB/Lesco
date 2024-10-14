@@ -11,7 +11,6 @@ public class Employees implements FileHandling {
 
   protected HashMap<String, String> EmployeesData = new HashMap<String, String>();
   final String EMPLOYEE_DATA = "EmployeesData.txt";
-  // Minimum 4 letters and maximum 14
   String usernameRegex = "^[a-zA-Z][a-zA-Z0-9_.]{4,14}$";
 
   public Employees() {

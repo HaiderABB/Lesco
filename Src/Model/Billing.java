@@ -47,8 +47,6 @@ public class Billing {
     this.PaidDate = null;
   }
 
-  // Getters and Setters
-
   public void setTaxRate(Double units) {
     this.TaxRate = units;
   }

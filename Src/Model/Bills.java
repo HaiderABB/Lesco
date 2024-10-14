@@ -88,7 +88,6 @@ public class Bills implements FileHandling {
         Billing b = new Billing();
         b.setID(Integer.parseInt(fields[0]));
 
-        // Convert month to correct format
         String month = fields[1].toUpperCase();
         Month billingMonth = Month.valueOf(month);
         b.setBillingMonth(billingMonth);
@@ -111,7 +110,7 @@ public class Bills implements FileHandling {
         if (!fields[10].isEmpty()) {
           b.setPaidDate(fields[10]);
         } else {
-          b.setPaidDate("N/A"); 
+          b.setPaidDate("N/A");
         }
         b.setTaxRate(Double.parseDouble(fields[11]));
         b.setRegularUnitsPrice(Double.parseDouble(fields[12]));
@@ -339,7 +338,7 @@ public class Bills implements FileHandling {
       System.out.println("Regular Unit Price: " + Taxes.get(0).getRegularUnitsPrice());
       System.out.println("Tax Rate Percentage: " + Taxes.get(0).getTaxRate());
       System.out.println("Fixed Charges: " + Taxes.get(0).getFixedCharges());
-      System.out.println("Meter Reading: " + MeterReading); // Assuming you have a MeterReading variable
+      System.out.println("Meter Reading: " + MeterReading);
       System.out.println("Calculated Sales Tax: " + SalesTax);
       System.out.println("Total Amount (including Sales Tax and Fixed Charges): " + total);
       System.out.println("--------------------");
@@ -355,7 +354,7 @@ public class Bills implements FileHandling {
       System.out.println("Regular Unit Price: " + Taxes.get(0).getRegularUnitsPrice());
       System.out.println("Tax Rate Percentage: " + Taxes.get(0).getTaxRate());
       System.out.println("Fixed Charges: " + Taxes.get(0).getFixedCharges());
-      System.out.println("Meter Reading: " + MeterReading); // Assuming you have a MeterReading variable
+      System.out.println("Meter Reading: " + MeterReading);
       System.out.println("Calculated Sales Tax: " + SalesTax);
       System.out.println("Total Amount (including Sales Tax and Fixed Charges): " + total);
       System.out.println("--------------------");

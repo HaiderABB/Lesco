@@ -37,7 +37,7 @@ public class UserMenu {
 
       System.out.print("Enter your choice: ");
       choice = scanner.nextInt();
-      scanner.nextLine(); // Consume newline
+      scanner.nextLine();
 
       switch (choice) {
         case 1:
@@ -119,7 +119,7 @@ public class UserMenu {
           if (input == 1) {
             System.out.println("Enter Customer ID: ");
             ID = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             while (ID < 0) {
               System.out.println("ID cannot be less than zero");
@@ -175,13 +175,11 @@ public class UserMenu {
             System.out.println("Enter Customer Type (Commercial or Domestic): ");
             String customerType = scanner.nextLine();
 
-            // Loop while the customer type is neither "Commercial" nor "Domestic"
             while (!customerType.equalsIgnoreCase("Commercial") && !customerType.equalsIgnoreCase("Domestic")) {
               System.out.println("Enter Correct Customer Type (Commercial or Domestic): ");
               customerType = scanner.nextLine();
             }
 
-            // Normalize the input: set it to "Commercial" or "Domestic"
             if (customerType.equalsIgnoreCase("Commercial")) {
               customerType = "Commercial";
             } else if (customerType.equalsIgnoreCase("Domestic")) {
@@ -226,7 +224,7 @@ public class UserMenu {
       System.out.println("Enter -1 to Exit");
       System.out.print("Enter your choice: ");
       userType = scanner.nextInt();
-      scanner.nextLine(); // Consume newline
+      scanner.nextLine();
 
       if (userType == 1) {
         Employees Employee = new Employees();
@@ -238,8 +236,8 @@ public class UserMenu {
 
         if (Employee.LogIn(username, password)) {
           System.out.println("Login successful as Employee.");
-          employeeMenu(Bill); // Call employee-specific menu
-          Employee.WriteToFile(); // Save employee data to file
+          employeeMenu(Bill);
+          Employee.WriteToFile();
         } else {
           System.out.println("Invalid Employee credentials.");
         }
@@ -248,7 +246,7 @@ public class UserMenu {
 
         System.out.println("Enter Customer ID: ");
         int ID = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         while (ID < 0) {
           System.out.println("ID cannot be less than zero");
@@ -265,7 +263,7 @@ public class UserMenu {
           }
         }
 
-        if (ID != -1) { // Continue only if the user hasn't exited
+        if (ID != -1) {
           System.out.println("Enter Customer CNIC: ");
           String cnicInput = scanner.nextLine();
           while (!cnicInput.matches(CNICregex)) {
@@ -276,7 +274,7 @@ public class UserMenu {
           BigInteger cnic = new BigInteger(cnicInput);
 
           if (Customer.LogIn(ID, cnic)) {
-            customerMenu(Customer, cnic, ID, Bill); // Call customer-specific menu
+            customerMenu(Customer, cnic, ID, Bill);
           } else {
             System.out.println("Invalid Customer credentials.");
           }

@@ -38,46 +38,38 @@ public class Nadra implements FileHandling {
       String line;
 
       while ((line = reader.readLine()) != null) {
-        // Skip empty lines
         if (line.trim().isEmpty()) {
           continue;
         }
 
         String[] fields = line.split(",");
 
-        // Check if the line has the correct number of fields (expecting 3: CNIC,
-        // IssueDate, ExpiryDate)
         if (fields.length < 3) {
           System.out.println("Skipping incomplete line: " + line);
           continue;
         }
 
-        // Creating an instance of NadraData
         NadraData m = new NadraData();
 
-        // Validating and setting CNIC
         if (!fields[0].trim().isEmpty()) {
           try {
             BigInteger n = new BigInteger(fields[0].trim());
             m.setCNIC(n);
           } catch (NumberFormatException e) {
             System.out.println("Invalid CNIC format in line: " + line);
-            continue; // Skip this line if CNIC is invalid
+            continue;
           }
         }
 
-        // Set IssueDate and ExpiryDate after trimming whitespaces
         m.setIssueDate(fields[1].trim());
         m.setExpiryDate(fields[2].trim());
 
-        // Adding the object to the Data list
         Data.add(m);
       }
 
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      // Close resources safely
       if (reader != null) {
         try {
           reader.close();

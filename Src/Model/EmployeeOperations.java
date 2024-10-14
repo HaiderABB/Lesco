@@ -132,13 +132,11 @@ public class EmployeeOperations {
     System.out.println("Enter Customer Type (Commercial or Domestic): ");
     String customerType = scanner.nextLine();
 
-    // Loop while the customer type is neither "Commercial" nor "Domestic"
     while (!customerType.equalsIgnoreCase("Commercial") && !customerType.equalsIgnoreCase("Domestic")) {
       System.out.println("Enter Correct Customer Type (Commercial or Domestic): ");
       customerType = scanner.nextLine();
     }
 
-    // Normalize the input: set it to "Commercial" or "Domestic"
     if (customerType.equalsIgnoreCase("Commercial")) {
       customerType = "Commercial";
     } else if (customerType.equalsIgnoreCase("Domestic")) {
@@ -148,13 +146,11 @@ public class EmployeeOperations {
     System.out.println("Enter Meter Type (Single Phase or Three Phase): ");
     String meterType = scanner.nextLine();
 
-    // Loop while the meter type is neither "Single Phase" nor "Three Phase"
     while (!meterType.equalsIgnoreCase("Single Phase") && !meterType.equalsIgnoreCase("Three Phase")) {
       System.out.println("Enter Correct Meter Type (Single Phase or Three Phase): ");
       meterType = scanner.nextLine();
     }
 
-    // Normalize the input: set it to "Single Phase" or "Three Phase"
     if (meterType.equalsIgnoreCase("Single Phase")) {
       meterType = "Single Phase";
     } else if (meterType.equalsIgnoreCase("Three Phase")) {
@@ -186,20 +182,18 @@ public class EmployeeOperations {
 
       System.out.print("Enter your choice: ");
       choice = scanner.nextInt();
-      scanner.nextLine(); // Consume the newline character
+      scanner.nextLine();
 
       if (choice == 1) {
-        // Display the list of customers
         System.out.println("Select a customer by ID:");
         for (Customer customer : c.customers) {
           System.out.println(customer.ID + ": " + customer.name);
         }
 
         int selectedID = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
         Customer selectedCustomer = null;
 
-        // Find the customer with the selected ID
         for (Customer customer : c.customers) {
           if (customer.ID == selectedID) {
             selectedCustomer = customer;
@@ -208,7 +202,6 @@ public class EmployeeOperations {
         }
 
         if (selectedCustomer != null) {
-          // Display the update options for the selected customer
           int updateChoice;
           do {
             System.out.println("\nUpdate Options:");
@@ -223,7 +216,7 @@ public class EmployeeOperations {
 
             System.out.print("Enter your choice: ");
             updateChoice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (updateChoice) {
               case 1:
@@ -267,14 +260,12 @@ public class EmployeeOperations {
               case 4:
                 System.out.print("Enter new Customer Type: ");
                 String newCustomerType = scanner.nextLine();
-                // Loop while the customer type is neither "Commercial" nor "Domestic"
                 while (!newCustomerType.equalsIgnoreCase("Commercial")
                     && !newCustomerType.equalsIgnoreCase("Domestic")) {
                   System.out.println("Enter Correct Customer Type (Commercial or Domestic): ");
                   newCustomerType = scanner.nextLine();
                 }
 
-                // Normalize the input: set it to "Commercial" or "Domestic"
                 if (newCustomerType.equalsIgnoreCase("Commercial")) {
                   newCustomerType = "Commercial";
                 } else if (newCustomerType.equalsIgnoreCase("Domestic")) {
@@ -286,14 +277,12 @@ public class EmployeeOperations {
               case 5:
                 System.out.print("Enter new Meter Type: ");
                 String newMeterType = scanner.nextLine();
-                // Loop while the meter type is neither "Single Phase" nor "Three Phase"
                 while (!newMeterType.equalsIgnoreCase("Single Phase")
                     && !newMeterType.equalsIgnoreCase("Three Phase")) {
                   System.out.println("Enter Correct Meter Type (Single Phase or Three Phase): ");
                   newMeterType = scanner.nextLine();
                 }
 
-                // Normalize the input: set it to "Single Phase" or "Three Phase"
                 if (newMeterType.equalsIgnoreCase("Single Phase")) {
                   newMeterType = "Single Phase";
                 } else if (newMeterType.equalsIgnoreCase("Three Phase")) {
@@ -305,11 +294,11 @@ public class EmployeeOperations {
               case 6:
                 System.out.print("Enter new Regular Units: ");
                 Double newRegularUnits = scanner.nextDouble();
-                scanner.nextLine(); // Consume the newline character
+                scanner.nextLine();
                 while (newRegularUnits < 0.0) {
                   System.out.print("Regular Units Cant be negative: ");
                   newRegularUnits = scanner.nextDouble();
-                  scanner.nextLine(); // Consume the newline character
+                  scanner.nextLine();
                 }
                 selectedCustomer.setRegularUnits(newRegularUnits);
                 System.out.println("Regular Units updated.");
@@ -317,11 +306,11 @@ public class EmployeeOperations {
               case 7:
                 System.out.print("Enter new Peak Units: ");
                 Double newPeakUnits = scanner.nextDouble();
-                scanner.nextLine(); // Consume the newline character
+                scanner.nextLine();
                 while (newPeakUnits < 0.0) {
                   System.out.print("Peak Units Cant be negative: ");
                   newPeakUnits = scanner.nextDouble();
-                  scanner.nextLine(); // Consume the newline character
+                  scanner.nextLine();
                 }
                 selectedCustomer.setPeakUnits(newPeakUnits);
                 System.out.println("Peak Units updated.");
@@ -426,7 +415,6 @@ public class EmployeeOperations {
       int choice = -1;
 
       while (choice != 0) {
-        // Display Menu Options
         System.out.println("\nWhat would you like to update?");
         System.out.println("1. Regular Unit Price");
         System.out.println("2. Tax Percentage");
@@ -438,7 +426,6 @@ public class EmployeeOperations {
 
         switch (choice) {
           case 1:
-            // Update Regular Unit Price
             System.out.print("Enter new Regular Unit Price: ");
             regularUnitPrice = getValidDoubleInput(scanner);
             System.out.println("Regular Unit Price updated to: " + regularUnitPrice);
@@ -446,7 +433,6 @@ public class EmployeeOperations {
             break;
 
           case 2:
-            // Update Tax Percentage
             System.out.print("Enter new Tax Percentage: ");
             taxPercentage = getValidDoubleInput(scanner);
             System.out.println("Tax Percentage updated to: " + taxPercentage);
@@ -454,7 +440,6 @@ public class EmployeeOperations {
             break;
 
           case 3:
-            // Update Fixed Charges
             System.out.print("Enter new Fixed Charges: ");
             fixedCharges = getValidDoubleInput(scanner);
             System.out.println("Fixed Charges updated to: " + fixedCharges);
@@ -462,7 +447,6 @@ public class EmployeeOperations {
             break;
 
           case 0:
-            // Exit
             System.out.println("Exiting...");
             break;
 
@@ -476,7 +460,6 @@ public class EmployeeOperations {
       int choice = -1;
 
       while (choice != 0) {
-        // Display Menu Options
         System.out.println("\nWhat would you like to update?");
         System.out.println("1. Regular Unit Price");
         System.out.println("2. Tax Percentage");
@@ -488,14 +471,12 @@ public class EmployeeOperations {
 
         switch (choice) {
           case 1:
-            // Update Regular Unit Price
             System.out.print("Enter new Regular Unit Price: ");
             regularUnitPrice = getValidDoubleInput(scanner);
             System.out.println("Regular Unit Price updated to: " + regularUnitPrice);
             b.Taxes.get(1).setRegularUnitsPrice(regularUnitPrice);
             break;
           case 2:
-            // Update Tax Percentage
             System.out.print("Enter new Tax Percentage: ");
             taxPercentage = getValidDoubleInput(scanner);
             System.out.println("Tax Percentage updated to: " + taxPercentage);
@@ -503,7 +484,6 @@ public class EmployeeOperations {
             break;
 
           case 3:
-            // Update Fixed Charges
             System.out.print("Enter new Fixed Charges: ");
             fixedCharges = getValidDoubleInput(scanner);
             System.out.println("Fixed Charges updated to: " + fixedCharges);
@@ -511,7 +491,6 @@ public class EmployeeOperations {
             break;
 
           case 0:
-            // Exit
             System.out.println("Exiting...");
             break;
 
@@ -524,7 +503,6 @@ public class EmployeeOperations {
       int choice = -1;
 
       while (choice != 0) {
-        // Display Menu Options
         System.out.println("\nWhat would you like to update?");
         System.out.println("1. Regular Unit Price");
         System.out.println("2. Peak Hour Unit Price");
@@ -537,7 +515,6 @@ public class EmployeeOperations {
 
         switch (choice) {
           case 1:
-            // Update Regular Unit Price
             System.out.print("Enter new Regular Unit Price: ");
             regularUnitPrice = getValidDoubleInput(scanner);
             System.out.println("Regular Unit Price updated to: " + regularUnitPrice);
@@ -545,7 +522,6 @@ public class EmployeeOperations {
             break;
 
           case 2:
-            // Update Peak Hour Unit Price
             System.out.print("Enter new Peak Hour Unit Price: ");
             peakHourUnitPrice = getValidDoubleInput(scanner);
             System.out.println("Peak Hour Unit Price updated to: " + peakHourUnitPrice);
@@ -553,7 +529,6 @@ public class EmployeeOperations {
             break;
 
           case 3:
-            // Update Tax Percentage
             System.out.print("Enter new Tax Percentage: ");
             taxPercentage = getValidDoubleInput(scanner);
             System.out.println("Tax Percentage updated to: " + taxPercentage);
@@ -561,7 +536,6 @@ public class EmployeeOperations {
             break;
 
           case 4:
-            // Update Fixed Charges
             System.out.print("Enter new Fixed Charges: ");
             fixedCharges = getValidDoubleInput(scanner);
             System.out.println("Fixed Charges updated to: " + fixedCharges);
@@ -569,7 +543,6 @@ public class EmployeeOperations {
             break;
 
           case 0:
-            // Exit
             System.out.println("Exiting...");
             break;
 
@@ -582,7 +555,6 @@ public class EmployeeOperations {
       int choice = -1;
 
       while (choice != 0) {
-        // Display Menu Options
         System.out.println("\nWhat would you like to update?");
         System.out.println("1. Regular Unit Price");
         System.out.println("2. Peak Hour Unit Price");
@@ -595,7 +567,6 @@ public class EmployeeOperations {
 
         switch (choice) {
           case 1:
-            // Update Regular Unit Price
             System.out.print("Enter new Regular Unit Price: ");
             regularUnitPrice = getValidDoubleInput(scanner);
             System.out.println("Regular Unit Price updated to: " + regularUnitPrice);
@@ -603,7 +574,6 @@ public class EmployeeOperations {
             break;
 
           case 2:
-            // Update Peak Hour Unit Price
             System.out.print("Enter new Peak Hour Unit Price: ");
             peakHourUnitPrice = getValidDoubleInput(scanner);
             System.out.println("Peak Hour Unit Price updated to: " + peakHourUnitPrice);
@@ -611,7 +581,6 @@ public class EmployeeOperations {
             break;
 
           case 3:
-            // Update Tax Percentage
             System.out.print("Enter new Tax Percentage: ");
             taxPercentage = getValidDoubleInput(scanner);
             System.out.println("Tax Percentage updated to: " + taxPercentage);
@@ -619,7 +588,6 @@ public class EmployeeOperations {
             break;
 
           case 4:
-            // Update Fixed Charges
             System.out.print("Enter new Fixed Charges: ");
             fixedCharges = getValidDoubleInput(scanner);
             System.out.println("Fixed Charges updated to: " + fixedCharges);
@@ -627,7 +595,6 @@ public class EmployeeOperations {
             break;
 
           case 0:
-            // Exit
             System.out.println("Exiting...");
             break;
 
