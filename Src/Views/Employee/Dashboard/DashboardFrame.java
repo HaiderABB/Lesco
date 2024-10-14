@@ -1,13 +1,22 @@
 package Views.Employee.Dashboard;
 
+import Model.Bills;
+import Model.Customers;
+import Model.Employees;
+import Model.MeterInfo;
+import Model.Nadra;
+import Model.NadraData;
+import Views.DashboardSuper;
+import Views.Employee.Dashboard.ManageCustomer.ManageCustomer;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,12 +24,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class DashboardFrame {
+public class DashboardFrame extends DashboardSuper {
 
   public JFrame mainFrame;
   public JPanel EmpPanel;
-  public JPanel MainPanel;
-  public JPanel ButtonPanel;
+  public JPanel MainPanel; // Border Layout
+  public JPanel ButtonPanel; // Grid Layout
+  public JPanel SubPanel; // Border Layout
 
   public JButton JManageCustomer;
   public JButton JManageMeter;
@@ -33,12 +43,27 @@ public class DashboardFrame {
   public JLabel JEmployeeName;
   public String EmployeeName;
 
-  public Color MPcolor = new Color(0, 71, 171, 255);
-  public Color EPcolor = new Color(211, 211, 211, 255);
+  public ManageCustomer ManageCustomerWindow;
 
-  public DashboardFrame() {
+  Customers customerData;
+  Bills billData;
+  MeterInfo meterData;
+  Nadra nadraData;
+
+  public DashboardFrame(Bills B,
+      Customers C,
+      Employees E,
+      MeterInfo M,
+      Nadra N) {
     setName("Talha Tariq");
+
+    customerData = C;
+    billData = B;
+    meterData = M;
+    nadraData = N;
+
     init();
+
   }
 
   void init() {
@@ -49,6 +74,8 @@ public class DashboardFrame {
 
     initButtons();
     initPanels();
+    initSubPanel();
+
     mainFrame.pack();
     mainFrame.setVisible(true);
   }
@@ -63,6 +90,13 @@ public class DashboardFrame {
   void initButtons() {
     JManageCustomer = new JButton("Manage Customers");
     styleButton(JManageCustomer);
+    JManageCustomer.addActionListener((ActionEvent e) -> {
+      ManageCustomerWindow = new ManageCustomer(customerData);
+      SubPanel.removeAll();
+      SubPanel.add(ManageCustomerWindow.MainPanel);
+      SubPanel.revalidate();
+      SubPanel.repaint();
+    });
 
     JManageMeter = new JButton("Manage Meters");
     styleButton(JManageMeter);
@@ -122,6 +156,20 @@ public class DashboardFrame {
     EmpPanel.add(JWelcomePanel, BorderLayout.CENTER);
   }
 
+  void initSubPanel() {
+    SubPanel = new JPanel();
+
+    SubPanel.setBackground(EPcolor);
+    SubPanel.setForeground(MPcolor);
+
+    JLabel text = new JLabel("Click button to continue");
+    text.setFont(new Font("Arial", 2, 34));
+
+    SubPanel.add(text);
+
+    MainPanel.add(SubPanel, BorderLayout.CENTER);
+  }
+
   void initEmployeeWelcome(JPanel j) {
     JEmployeeName = new JLabel("Welcome, " + EmployeeName + "!");
     JEmployeeName.setForeground(EPcolor);
@@ -172,6 +220,11 @@ public class DashboardFrame {
   }
 
   public static void main(String[] args) {
-    new DashboardFrame();
+    Bills B = new Bills();
+    Customers C = new Customers();
+    Employees E = new Employees();
+    MeterInfo M = new MeterInfo();
+    Nadra N = new Nadra();
+    new DashboardFrame(B, C, E, M, N);
   }
 }

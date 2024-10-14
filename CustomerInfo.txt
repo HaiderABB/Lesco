@@ -1,1 +1,1 @@
-1,3520105043723,Haider Abbas Moazzam,Askari 10,03219306126,Domestic,Single Phase,18/09/24,0.0,0.0
+1,3520105043723,Haider Abbas Moazzam,Askari 10,03219306126,Domestic,Single Phase,18/09/24,0.0,0.0,Update,Delete
