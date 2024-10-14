@@ -1,8 +1,8 @@
-package DB;
+package Model;
 
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 public class Billing {
   protected int ID;

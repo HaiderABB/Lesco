@@ -1,6 +1,5 @@
-package DB;
+package Model;
 
-import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -9,11 +8,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Bills implements FileHandling {
 
-  protected ArrayList<Billing> CustomerBills = new ArrayList<Billing>();
-  public ArrayList<TariffTaxInfo> Taxes = new ArrayList<TariffTaxInfo>();
+  protected ArrayList<Billing> CustomerBills = new ArrayList<>();
+  public ArrayList<TariffTaxInfo> Taxes = new ArrayList<>();
   String TaxFile = "TariffTaxInfo.txt";
   String BillsFile = "BillingInfo.txt";
 
@@ -93,7 +93,6 @@ public class Bills implements FileHandling {
         Month billingMonth = Month.valueOf(month);
         b.setBillingMonth(billingMonth);
 
-        // Set other values
         b.setCurrentRegularReading(Double.parseDouble(fields[2]));
         b.setEntryDate(fields[3]);
         b.setCurrentPeakReading(Double.parseDouble(fields[4]));
@@ -101,27 +100,23 @@ public class Bills implements FileHandling {
         b.setFixedCharges(Double.parseDouble(fields[6]));
         b.setTotalAmount(Double.parseDouble(fields[7]));
 
-        // DueDate is set directly
         b.setDueDate(fields[8]);
 
-        // Handle empty or null PaidStatus
         if (!fields[9].isEmpty()) {
           b.setPaidStatus(fields[9]);
         } else {
           b.setPaidStatus("Unpaid");
         }
 
-        // Handle empty or null PaidDate
         if (!fields[10].isEmpty()) {
           b.setPaidDate(fields[10]);
         } else {
-          b.setPaidDate("N/A"); // or set to null if preferred: b.setPaidDate(null);
+          b.setPaidDate("N/A"); 
         }
         b.setTaxRate(Double.parseDouble(fields[11]));
         b.setRegularUnitsPrice(Double.parseDouble(fields[12]));
         b.setPeakUnitsPrice(Double.parseDouble(fields[13]));
 
-        // Add the bill to the list
         CustomerBills.add(b);
       }
     } catch (IOException e) {

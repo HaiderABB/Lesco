@@ -1,13 +1,11 @@
-import java.util.Scanner;
-
-import DB.Bills;
-import DB.Customers;
-import DB.EmployeeOperations;
-import DB.Employees;
-import DB.MeterInfo;
-import DB.Nadra;
-
+import Model.Bills;
+import Model.Customers;
+import Model.EmployeeOperations;
+import Model.Employees;
+import Model.MeterInfo;
+import Model.Nadra;
 import java.math.BigInteger;
+import java.util.Scanner;
 
 public class UserMenu {
 
