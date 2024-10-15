@@ -7,6 +7,7 @@ import Model.MeterInfo;
 import Model.Nadra;
 import Views.DashboardSuper;
 import Views.Employee.Dashboard.ManageCustomer.ManageCustomer;
+import Views.Employee.Dashboard.ManageMeter.AddMeter;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -43,6 +44,7 @@ public class DashboardFrame extends DashboardSuper {
   public String EmployeeName;
 
   public ManageCustomer ManageCustomerWindow;
+  public AddMeter AddMeterWindow;
 
   Customers customerData;
   Bills billData;
@@ -90,7 +92,7 @@ public class DashboardFrame extends DashboardSuper {
     JManageCustomer = new JButton("Manage Customers");
     styleButton(JManageCustomer);
     JManageCustomer.addActionListener((ActionEvent e) -> {
-      ManageCustomerWindow = new ManageCustomer(customerData);
+      ManageCustomerWindow = new ManageCustomer(customerData, meterData);
       SubPanel.removeAll();
       SubPanel.add(ManageCustomerWindow.MainPanel);
       SubPanel.revalidate();
@@ -99,6 +101,13 @@ public class DashboardFrame extends DashboardSuper {
 
     JManageMeter = new JButton("Manage Meters");
     styleButton(JManageMeter);
+    JManageMeter.addActionListener((ActionEvent e) -> {
+      AddMeterWindow = new AddMeter(customerData, nadraData, meterData);
+      SubPanel.removeAll();
+      SubPanel.add(AddMeterWindow.MainPanel);
+      SubPanel.revalidate();
+      SubPanel.repaint();
+    });
 
     JViewBills = new JButton("View Bills");
     styleButton(JViewBills);

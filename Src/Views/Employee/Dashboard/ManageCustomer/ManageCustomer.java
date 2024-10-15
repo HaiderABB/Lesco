@@ -2,6 +2,7 @@ package Views.Employee.Dashboard.ManageCustomer;
 
 import Model.Customer;
 import Model.Customers;
+import Model.MeterInfo;
 import Views.DashboardSuper;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,10 +24,12 @@ public class ManageCustomer extends DashboardSuper {
       "Connection Date", "Regular Reading", "Peak Reading", "Update", "Delete"
   };
   Customers customerData;
+  MeterInfo meterInfo;
   private int[] originalIndices;
 
-  public ManageCustomer(Customers customerData) {
+  public ManageCustomer(Customers customerData, MeterInfo meterInfo) {
     this.customerData = customerData;
+    this.meterInfo = meterInfo;
     init();
   }
 
@@ -204,8 +207,14 @@ public class ManageCustomer extends DashboardSuper {
           customer.setMeterType(fields[6].getText());
         }
 
-        customer.setRegularUnits(Double.parseDouble(fields[8].getText()));
-        customer.setPeakUnits(Double.parseDouble(fields[9].getText()));
+        if (Double.parseDouble(fields[8].getText()) > 0.0) {
+          customer.setRegularUnits(Double.parseDouble(fields[8].getText()));
+
+        }
+
+        if (Double.parseDouble(fields[9].getText()) > 0.0) {
+          customer.setPeakUnits(Double.parseDouble(fields[9].getText()));
+        }
 
         return true;
       } catch (NumberFormatException ex) {
@@ -249,6 +258,8 @@ public class ManageCustomer extends DashboardSuper {
           model.setValueAt(currentCustomer.getRegularUnits(), row, 8);
           model.setValueAt(currentCustomer.getPeakUnits(), row, 9);
           JOptionPane.showMessageDialog(button, "Customer updated successfully!");
+          customerData.WriteToFile();
+
         }
       }
     }
@@ -257,12 +268,20 @@ public class ManageCustomer extends DashboardSuper {
       int customerID = (int) CustomerTable.getValueAt(row, 0);
       int confirmDelete = JOptionPane.showConfirmDialog(button, "Are you sure you want to delete?",
           "Delete Confirmation", JOptionPane.YES_NO_OPTION);
+
       if (confirmDelete == JOptionPane.YES_OPTION) {
         customerData.removeCustomer(customerID);
+
+        BigInteger meterId = new BigInteger(CustomerTable.getValueAt(row, 1).toString());
+        meterInfo.removeMeter(meterId);
+
         DefaultTableModel model = (DefaultTableModel) CustomerTable.getModel();
         model.removeRow(row);
+        meterInfo.WriteToFile();
+        customerData.WriteToFile();
         JOptionPane.showMessageDialog(button, "Customer deleted successfully!");
       }
     }
+
   }
 }

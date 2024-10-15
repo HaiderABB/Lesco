@@ -16,6 +16,31 @@ public class MeterInfo implements FileHandling {
     ReadFromFile();
   }
 
+  public int getMeterNumber(BigInteger cnic) {
+    for (Meter m : Meters) {
+      int comparison = m.getCNIC().compareTo(cnic);
+      if (comparison == 0) {
+        return m.getNumber();
+      }
+    }
+    return 0;
+  }
+
+  public void removeMeter(BigInteger cnic) {
+
+    for (Meter m : Meters) {
+      int comparison = m.getCNIC().compareTo(cnic);
+      if (comparison == 0) {
+        m.number = m.number - 1;
+        if (m.number == 0) {
+          Meters.remove(m);
+        }
+        return;
+      }
+    }
+
+  }
+
   public boolean addMeter(BigInteger CNIC) {
     for (Meter m : Meters) {
       int comparison = m.getCNIC().compareTo(CNIC);
