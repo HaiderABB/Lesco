@@ -26,7 +26,6 @@ public class EmployeeController {
     createEmployeeInstance();
     createMeterInfoInstance();
     createNadraInstance();
-
     DF = new DashboardFrame(B, C, E, M, N);
 
   }
@@ -52,7 +51,6 @@ public class EmployeeController {
 
   void createNadraInstance() {
     N = new Nadra();
-
   }
 
   public static void main(String[] args) {

@@ -110,6 +110,15 @@ public class Customers implements FileHandling {
 
   }
 
+  public void removeCustomer(int ID) {
+    for (Customer c : customers) {
+      if (c.ID == ID) {
+        customers.remove(c);
+        break;
+      }
+    }
+  }
+
   public void WriteIDs() {
     FileWriter fw = null;
     BufferedWriter writer = null;

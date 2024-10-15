@@ -5,7 +5,6 @@ import Model.Customers;
 import Model.Employees;
 import Model.MeterInfo;
 import Model.Nadra;
-import Model.NadraData;
 import Views.DashboardSuper;
 import Views.Employee.Dashboard.ManageCustomer.ManageCustomer;
 import java.awt.BorderLayout;
@@ -16,7 +15,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -120,6 +119,17 @@ public class DashboardFrame extends DashboardSuper {
     JLogout.setFocusPainted(false);
     JLogout.setContentAreaFilled(true);
     JLogout.setOpaque(true);
+
+    JLogout.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        customerData.WriteToFile();
+        billData.WriteToFile();
+        meterData.WriteToFile();
+        nadraData.WriteToFile();
+      }
+    });
+
   }
 
   void styleButton(JButton button) {

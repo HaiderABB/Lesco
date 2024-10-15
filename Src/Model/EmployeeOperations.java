@@ -105,7 +105,6 @@ public class EmployeeOperations {
       System.out.println("Name can only include Alphabets");
       name = scanner.nextLine();
       matcher = namePattern.matcher(name);
-
     }
 
     System.out.println("Enter Address of the customer, without commas :");

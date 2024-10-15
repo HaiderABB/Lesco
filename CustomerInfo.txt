@@ -1,1 +1,10 @@
-1,3520105043723,Haider Abbas Moazzam,Askari 10,03219306126,Domestic,Single Phase,18/09/24,0.0,0.0,Update,Delete
+1,3520105043723,Haider Abbas Moazzam,Askari 10,03219306126,Domestic,Single Phase,18/09/24,0.0,0.0
+2,3520145067890,Zainab Khalid,Model Town,03123456789,Commercial,Three Phase,20/08/24,50.0,30.0
+3,3520198765432,Ahmed Ali,Johar Town,03215678901,Domestic,Single Phase,15/07/24,60.5,25.0
+4,3520132456789,Farah Naz,Defense,03456789012,Commercial,Three Phase,10/06/24,45.0,20.0
+5,3520156789345,Sara Khan,Gulberg,03004567891,Domestic,Single Phase,12/05/24,70.0,40.0
+6,3520187654321,Usman Tariq,Wapda Town,03199876543,Domestic,Single Phase,01/10/24,30.0,10.0
+7,3520123456789,Amna Zahid,Faisal Town,03216543210,Commercial,Three Phase,05/09/24,100.0,50.0
+8,3520178965432,Ali Raza,Liberty,03312345678,Domestic,Single Phase,22/08/24,90.0,60.0
+9,3520145678901,Ayesha Malik,Saddar,03006543219,Domestic,Single Phase,30/07/24,40.0,20.0
+10,3520112345678,Muhammad Yousuf,Shahdara,03459876541,Commercial,Three Phase,25/06/24,80.0,55.0
