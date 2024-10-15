@@ -6,6 +6,7 @@ import Model.Employees;
 import Model.MeterInfo;
 import Model.Nadra;
 import Views.DashboardSuper;
+import Views.Employee.Dashboard.ManageBills.ManageBills;
 import Views.Employee.Dashboard.ManageCustomer.ManageCustomer;
 import Views.Employee.Dashboard.ManageMeter.AddMeter;
 import java.awt.BorderLayout;
@@ -28,13 +29,13 @@ public class DashboardFrame extends DashboardSuper {
 
   public JFrame mainFrame;
   public JPanel EmpPanel;
-  public JPanel MainPanel; // Border Layout
-  public JPanel ButtonPanel; // Grid Layout
-  public JPanel SubPanel; // Border Layout
+  public JPanel MainPanel;
+  public JPanel ButtonPanel;
+  public JPanel SubPanel;
 
-  public JButton JManageCustomer;
-  public JButton JManageMeter;
-  public JButton JViewBills;
+  public JButton JManageCustomer;// done
+  public JButton JManageMeter;// done
+
   public JButton JManageBills;
   public JButton JTaxes;
   public JButton JExpiry;
@@ -45,6 +46,7 @@ public class DashboardFrame extends DashboardSuper {
 
   public ManageCustomer ManageCustomerWindow;
   public AddMeter AddMeterWindow;
+  public ManageBills ManageBillsWindow;
 
   Customers customerData;
   Bills billData;
@@ -104,16 +106,20 @@ public class DashboardFrame extends DashboardSuper {
     JManageMeter.addActionListener((ActionEvent e) -> {
       AddMeterWindow = new AddMeter(customerData, nadraData, meterData);
       SubPanel.removeAll();
-      SubPanel.add(AddMeterWindow.MainPanel);
+      SubPanel.add(AddMeterWindow.MainPanel, BorderLayout.CENTER);
       SubPanel.revalidate();
       SubPanel.repaint();
     });
 
-    JViewBills = new JButton("View Bills");
-    styleButton(JViewBills);
-
     JManageBills = new JButton("Manage Bills");
     styleButton(JManageBills);
+    JManageBills.addActionListener((ActionEvent e) -> {
+      ManageBillsWindow = new ManageBills(customerData, billData);
+      SubPanel.removeAll();
+      SubPanel.add(ManageBillsWindow.MainPanel, BorderLayout.CENTER);
+      SubPanel.revalidate();
+      SubPanel.repaint();
+    });
 
     JExpiry = new JButton("View Expiry");
     styleButton(JExpiry);
@@ -177,6 +183,7 @@ public class DashboardFrame extends DashboardSuper {
 
   void initSubPanel() {
     SubPanel = new JPanel();
+    SubPanel.setLayout(new BorderLayout());
 
     SubPanel.setBackground(EPcolor);
     SubPanel.setForeground(MPcolor);
@@ -228,7 +235,7 @@ public class DashboardFrame extends DashboardSuper {
     ButtonPanel.add(JManageCustomer);
     ButtonPanel.add(JManageMeter);
     ButtonPanel.add(JManageBills);
-    ButtonPanel.add(JViewBills);
+
     ButtonPanel.add(JTaxes);
     ButtonPanel.add(JExpiry);
     ButtonPanel.setBackground(EPcolor);
@@ -244,6 +251,5 @@ public class DashboardFrame extends DashboardSuper {
     Employees E = new Employees();
     MeterInfo M = new MeterInfo();
     Nadra N = new Nadra();
-    new DashboardFrame(B, C, E, M, N);
   }
 }

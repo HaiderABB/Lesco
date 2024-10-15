@@ -7,7 +7,6 @@ import Views.DashboardSuper;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigInteger;
 import java.util.regex.Matcher;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -60,7 +59,7 @@ public class ManageCustomer extends DashboardSuper {
     CustomerTable = new JTable(CustomerModel) {
       @Override
       public boolean isCellEditable(int row, int column) {
-        return column == 10 || column == 11;
+        return column == 10 || column == 11; // Only update/delete columns are editable
       }
     };
     CustomerTable.getColumn("Update").setCellRenderer(new ButtonRenderer());
@@ -93,7 +92,7 @@ public class ManageCustomer extends DashboardSuper {
 
   private void filterCustomerData(String searchTerm) {
     DefaultTableModel model = (DefaultTableModel) CustomerTable.getModel();
-    model.setRowCount(0);
+    model.setRowCount(0); // Clear existing table rows
     int currentIndex = 0;
     for (Customer c : customerData.customers) {
       if (String.valueOf(c.getID()).contains(searchTerm)) {
@@ -111,7 +110,7 @@ public class ManageCustomer extends DashboardSuper {
         row[10] = "Update";
         row[11] = "Delete";
         model.addRow(row);
-        originalIndices[currentIndex] = customerData.customers.indexOf(c);
+        originalIndices[currentIndex] = customerData.customers.indexOf(c); // Track the original index of the customer
         currentIndex++;
       }
     }
@@ -144,7 +143,7 @@ public class ManageCustomer extends DashboardSuper {
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-      this.row = table.convertRowIndexToModel(row);
+      this.row = table.convertRowIndexToModel(row); // Correct row tracking for update/delete actions
       this.label = (value == null) ? "" : value.toString();
       button.setText(label);
       return button;
@@ -167,16 +166,7 @@ public class ManageCustomer extends DashboardSuper {
 
     private boolean validateAndUpdateCustomer(Customer customer, JTextField[] fields) {
       try {
-        int id = Integer.parseInt(fields[0].getText());
-        if (id > 0 && !customerData.checkID(id)) {
-          customer.setID(id);
-        }
 
-        BigInteger cnic = new BigInteger(fields[1].getText());
-        if (fields[1].getText().matches(CNICregex) && customerData.checkIDAgainstCNIC(id, cnic)) {
-          customer.setCNIC(cnic);
-
-        }
         if (fields[2].getText().matches(NameRegex.pattern())) {
           customer.setName(fields[2].getText());
         }
@@ -192,7 +182,6 @@ public class ManageCustomer extends DashboardSuper {
         matcher = PhoneRegex.matcher(fields[4].getText());
         if (matcher.matches() && !customerData.CheckPhone((fields[4].getText()))) {
           customer.setPhoneNumber(fields[4].getText());
-
         } else {
           JOptionPane.showMessageDialog(button, "Couldn't update Phone Number");
         }
@@ -209,7 +198,6 @@ public class ManageCustomer extends DashboardSuper {
 
         if (Double.parseDouble(fields[8].getText()) > 0.0) {
           customer.setRegularUnits(Double.parseDouble(fields[8].getText()));
-
         }
 
         if (Double.parseDouble(fields[9].getText()) > 0.0) {
@@ -236,52 +224,52 @@ public class ManageCustomer extends DashboardSuper {
         panel.add(fields[i]);
       }
       fields[0].setText(String.valueOf(currentCustomer.getID()));
-      fields[1].setText(currentCustomer.getCNIC().toString());
+      fields[1].setText(String.valueOf(currentCustomer.getCNIC()));
       fields[2].setText(currentCustomer.getName());
       fields[3].setText(currentCustomer.getAddress());
       fields[4].setText(currentCustomer.getPhoneNumber());
       fields[5].setText(currentCustomer.getCustomerType());
       fields[6].setText(currentCustomer.getMeterType());
+      fields[7].setText(String.valueOf(currentCustomer.getConnectionDate()));
       fields[8].setText(String.valueOf(currentCustomer.getRegularUnits()));
       fields[9].setText(String.valueOf(currentCustomer.getPeakUnits()));
-      int result = JOptionPane.showConfirmDialog(button, panel, "Update Customer Data", JOptionPane.OK_CANCEL_OPTION);
-      if (result == JOptionPane.OK_OPTION) {
-        if (validateAndUpdateCustomer(currentCustomer, fields)) {
-          DefaultTableModel model = (DefaultTableModel) CustomerTable.getModel();
-          model.setValueAt(currentCustomer.getID(), row, 0);
-          model.setValueAt(currentCustomer.getCNIC().toString(), row, 1);
-          model.setValueAt(currentCustomer.getName(), row, 2);
-          model.setValueAt(currentCustomer.getAddress(), row, 3);
-          model.setValueAt(currentCustomer.getPhoneNumber(), row, 4);
-          model.setValueAt(currentCustomer.getCustomerType(), row, 5);
-          model.setValueAt(currentCustomer.getMeterType(), row, 6);
-          model.setValueAt(currentCustomer.getRegularUnits(), row, 8);
-          model.setValueAt(currentCustomer.getPeakUnits(), row, 9);
-          JOptionPane.showMessageDialog(button, "Customer updated successfully!");
-          customerData.WriteToFile();
 
-        }
+      int option = JOptionPane.showConfirmDialog(button, panel, "Update Customer Information",
+          JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+      if (option == JOptionPane.OK_OPTION && validateAndUpdateCustomer(currentCustomer, fields)) {
+
+        DefaultTableModel model = (DefaultTableModel) CustomerTable.getModel();
+        model.setValueAt(currentCustomer.getID(), row, 0);
+        model.setValueAt(currentCustomer.getCNIC().toString(), row, 1);
+        model.setValueAt(currentCustomer.getName(), row, 2);
+        model.setValueAt(currentCustomer.getAddress(), row, 3);
+        model.setValueAt(currentCustomer.getPhoneNumber(), row, 4);
+        model.setValueAt(currentCustomer.getCustomerType(), row, 5);
+        model.setValueAt(currentCustomer.getMeterType(), row, 6);
+        model.setValueAt(currentCustomer.getRegularUnits(), row, 8);
+        model.setValueAt(currentCustomer.getPeakUnits(), row, 9);
+        JOptionPane.showMessageDialog(button, "Customer updated successfully!");
+
+        customerData.WriteToFile();
+        meterInfo.WriteToFile();
+        JOptionPane.showMessageDialog(button, "Updated Successfully");
+      } else {
+        JOptionPane.showMessageDialog(button, "Could not update the customer details.");
       }
     }
 
     private void deleteCustomerData() {
-      int customerID = (int) CustomerTable.getValueAt(row, 0);
-      int confirmDelete = JOptionPane.showConfirmDialog(button, "Are you sure you want to delete?",
-          "Delete Confirmation", JOptionPane.YES_NO_OPTION);
-
-      if (confirmDelete == JOptionPane.YES_OPTION) {
-        customerData.removeCustomer(customerID);
-
-        BigInteger meterId = new BigInteger(CustomerTable.getValueAt(row, 1).toString());
-        meterInfo.removeMeter(meterId);
-
-        DefaultTableModel model = (DefaultTableModel) CustomerTable.getModel();
-        model.removeRow(row);
-        meterInfo.WriteToFile();
+      int confirmation = JOptionPane.showConfirmDialog(button, "Are you sure you want to delete this customer?");
+      if (confirmation == JOptionPane.YES_OPTION) {
+        // Delete the customer from the data
+        customerData.customers.remove(originalIndices[row]);
+        // Save changes to the file
         customerData.WriteToFile();
-        JOptionPane.showMessageDialog(button, "Customer deleted successfully!");
+        meterInfo.WriteToFile();
+        JOptionPane.showMessageDialog(button, "Customer deleted successfully");
+        ((DefaultTableModel) CustomerTable.getModel()).removeRow(row);
       }
     }
-
   }
 }

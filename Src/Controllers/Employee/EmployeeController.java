@@ -5,6 +5,7 @@ import Model.Customers;
 import Model.Employees;
 import Model.MeterInfo;
 import Model.Nadra;
+import Model.TariffTaxInfo;
 import Views.Employee.Dashboard.*;
 import Views.Employee.Login.*;
 
@@ -26,6 +27,7 @@ public class EmployeeController {
     createEmployeeInstance();
     createMeterInfoInstance();
     createNadraInstance();
+
     DF = new DashboardFrame(B, C, E, M, N);
 
   }

@@ -33,44 +33,83 @@ public class AddMeter extends DashboardSuper {
 
   private void init() {
     MainPanel = new JPanel();
-    MainPanel.setLayout(new GridLayout(7, 2));
+    MainPanel.setLayout(new GridBagLayout()); // Use GridBagLayout for better control
     MainPanel.setBackground(EPcolor);
+    MainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Adding padding to the panel
 
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(5, 5, 5, 5); // Adding padding between components
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+
+    // Create Labels and Fields with smaller sizes
     JLabel cnicLabel = new JLabel("CNIC:");
     cnicField = new JTextField();
+    cnicField.setPreferredSize(new Dimension(400, 60)); // Set a smaller size for the text fields
 
     JLabel nameLabel = new JLabel("Name:");
     nameField = new JTextField();
+    nameField.setPreferredSize(new Dimension(400, 60));
 
     JLabel addressLabel = new JLabel("Address:");
     addressField = new JTextField();
+    addressField.setPreferredSize(new Dimension(400, 60));
 
     JLabel phoneNumberLabel = new JLabel("Phone Number:");
     phoneNumberField = new JTextField();
+    phoneNumberField.setPreferredSize(new Dimension(400, 60));
 
     JLabel customerTypeLabel = new JLabel("Customer Type:");
     customerTypeField = new JTextField();
+    customerTypeField.setPreferredSize(new Dimension(400, 60));
 
     JLabel meterTypeLabel = new JLabel("Meter Type:");
     meterTypeField = new JTextField();
+    meterTypeField.setPreferredSize(new Dimension(400, 60));
 
     addButton = new JButton("Add Meter");
-    addButton.addActionListener(new AddButtonListener());
 
-    MainPanel.add(cnicLabel);
-    MainPanel.add(cnicField);
-    MainPanel.add(nameLabel);
-    MainPanel.add(nameField);
-    MainPanel.add(addressLabel);
-    MainPanel.add(addressField);
-    MainPanel.add(phoneNumberLabel);
-    MainPanel.add(phoneNumberField);
-    MainPanel.add(customerTypeLabel);
-    MainPanel.add(customerTypeField);
-    MainPanel.add(meterTypeLabel);
-    MainPanel.add(meterTypeField);
-    MainPanel.add(new JLabel());
-    MainPanel.add(addButton);
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    MainPanel.add(cnicLabel, gbc);
+    gbc.gridx = 1;
+    MainPanel.add(cnicField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    MainPanel.add(nameLabel, gbc);
+    gbc.gridx = 1;
+    MainPanel.add(nameField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    MainPanel.add(addressLabel, gbc);
+    gbc.gridx = 1;
+    MainPanel.add(addressField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    MainPanel.add(phoneNumberLabel, gbc);
+    gbc.gridx = 1;
+    MainPanel.add(phoneNumberField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 4;
+    MainPanel.add(customerTypeLabel, gbc);
+    gbc.gridx = 1;
+    MainPanel.add(customerTypeField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 5;
+    MainPanel.add(meterTypeLabel, gbc);
+    gbc.gridx = 1;
+    MainPanel.add(meterTypeField, gbc);
+
+    gbc.gridx = 1;
+    gbc.gridy = 6;
+    gbc.gridwidth = 2;
+    MainPanel.add(addButton, gbc);
+
+    addButton.addActionListener(new AddButtonListener());
   }
 
   private class AddButtonListener implements ActionListener {
@@ -87,13 +126,11 @@ public class AddMeter extends DashboardSuper {
         BigInteger userCNIC = new BigInteger(cnic);
 
         if (nadraData.checkCNIC(userCNIC)) {
-
           if (meterInfo.addMeter(userCNIC)) {
             customerData.Register(userCNIC, name, address, phoneNumber, customerType, meterType);
-
           }
-
         }
+
         if (meterInfo.getMeterNumber(userCNIC) == 3) {
           JOptionPane.showMessageDialog(MainPanel, "Max Meter Limit Reached!");
         } else {

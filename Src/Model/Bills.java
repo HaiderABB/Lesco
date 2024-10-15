@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Bills implements FileHandling {
 
-  protected ArrayList<Billing> CustomerBills = new ArrayList<>();
+  public ArrayList<Billing> CustomerBills = new ArrayList<>();
   public ArrayList<TariffTaxInfo> Taxes = new ArrayList<>();
   String TaxFile = "TariffTaxInfo.txt";
   String BillsFile = "BillingInfo.txt";

@@ -1,3 +1,2 @@
-11,3520105043723,Haider Abbas Moazzam,Askari 10,03219306126,Domestic,Single Phase,15/10/24,0.0,0.0
-12,3520105043723,Haider Abbas Moazzam,Ichra,03259630145,Commercial,Three Phase,15/10/24,0.0,0.0
-
+11,3520105043723,Haider,Askari 10,03219306126,Domestic,Single Phase,15/10/24,0.0,0.0
+12,3520105043723,Ali,Ichra,03259630145,Commercial,Three Phase,15/10/24,0.0,0.0

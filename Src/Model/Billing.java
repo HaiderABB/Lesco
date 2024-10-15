@@ -51,6 +51,10 @@ public class Billing {
     this.TaxRate = units;
   }
 
+  public String getPaidStatus() {
+    return PaidStatus;
+  }
+
   public double getTaxRate() {
     return TaxRate;
   }
