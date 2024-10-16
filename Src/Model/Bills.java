@@ -380,26 +380,23 @@ public class Bills implements FileHandling {
     return paidAmount;
   }
 
-  public boolean printBill(int ID) {
+  public boolean printBill(int ID, Object[] row) {
     boolean flag = false;
     for (Billing b : CustomerBills) {
       if (b.getID() == ID) {
         flag = true;
-        System.out.println("Current Regular Meter Reading : " + b.getCurrentRegularReading());
-        System.out.println("Current Peak Meter Reading : " + b.getCurrentPeakReading());
-        System.out.println("Regular Unit Price Cost : " + b.getRegularUnitsPrice());
-        System.out.println("Peak Unit Price Cost : " + b.getPeakUnitsPrice());
-        System.out.println("Taxed Amount : " + b.getSalesTax());
-        System.out.println("Fixed Charges : " + b.getFixedCharges());
 
-        System.out.println("Total Amount : " + b.getTotalAmount());
-        System.out.println("Due Date : " + b.getDueDate());
-        if (b.isPaidStatus().equals("Paid")) {
-          System.out.println("Payment Date: " + b.getPaidDate());
-        }
-        System.out.println("Tax Rate: " + b.getTaxRate());
-        flag = true;
-        System.out.println("--------------------------------------");
+        row[0] = b.getCurrentRegularReading();
+        row[1] = b.getCurrentPeakReading();
+        row[2] = b.getRegularUnitsPrice();
+        row[3] = b.getPeakUnitsPrice();
+        row[4] = b.getSalesTax();
+        row[5] = b.getFixedCharges();
+        row[6] = b.getTotalAmount();
+        row[7] = b.getDueDate();
+        row[8] = b.getPaidDate();
+        row[9] = b.getTaxRate();
+
         break;
       }
     }
@@ -412,6 +409,80 @@ public class Bills implements FileHandling {
     for (Billing n : CustomerBills) {
       n.printBillDetails();
     }
+  }
+
+  public void ExpectedBillSingleDomestic(double MeterReading, Object[] row) {
+    Double Cost = Taxes.get(0).getRegularUnitsPrice();
+    Double percentage = Taxes.get(0).getTaxRate();
+    Double fixed = Taxes.get(0).getFixedCharges();
+    Double SalesTax = (MeterReading * Cost) * (percentage / 100);
+
+    Double total = SalesTax + (MeterReading * Cost) + fixed;
+
+    row[0] = Taxes.get(0).getRegularUnitsPrice();
+    row[1] = Taxes.get(0).getTaxRate();
+    row[2] = Taxes.get(0).getFixedCharges();
+    row[3] = MeterReading;
+    row[4] = SalesTax;
+    row[5] = total;
+
+  }
+
+  public void ExpectedBillSingleCommercial(double MeterReading, Object[] row) {
+    Double Cost = Taxes.get(1).getRegularUnitsPrice();
+    Double percentage = Taxes.get(1).getTaxRate();
+    Double fixed = Taxes.get(1).getFixedCharges();
+    Double SalesTax = (MeterReading * Cost) * (percentage / 100);
+
+    Double total = SalesTax + (MeterReading * Cost) + fixed;
+
+    row[0] = Taxes.get(1).getRegularUnitsPrice();
+    row[1] = Taxes.get(1).getTaxRate();
+    row[2] = Taxes.get(1).getFixedCharges();
+    row[3] = MeterReading;
+    row[4] = SalesTax;
+    row[5] = total;
+
+  }
+
+  public void ExpectedBillThreeDomestic(double MeterReading, double PeakMeterReading, Object[] row) {
+    Double Cost = Taxes.get(2).getRegularUnitsPrice();
+    Double PeakPrice = Taxes.get(2).getPeakUnitsPrice();
+    Double percentage = Taxes.get(2).getTaxRate();
+    Double fixed = Taxes.get(2).getFixedCharges();
+    Double SalesTax = (MeterReading * Cost) + (PeakPrice * PeakMeterReading) * (percentage / 100);
+
+    Double total = SalesTax + (MeterReading * Cost) + fixed + (PeakPrice * PeakMeterReading);
+
+    row[0] = Taxes.get(2).getRegularUnitsPrice();
+    row[1] = Taxes.get(2).getPeakUnitsPrice();
+    row[2] = Taxes.get(2).getTaxRate();
+    row[3] = Taxes.get(2).getFixedCharges();
+    row[4] = MeterReading;
+    row[5] = PeakMeterReading;
+    row[6] = SalesTax;
+    row[7] = total;
+
+  }
+
+  public void ExpectedBillThreeCommercial(double MeterReading, double PeakMeterReading, Object[] row) {
+    Double Cost = Taxes.get(3).getRegularUnitsPrice();
+    Double PeakPrice = Taxes.get(3).getPeakUnitsPrice();
+    Double percentage = Taxes.get(3).getTaxRate();
+    Double fixed = Taxes.get(3).getFixedCharges();
+    Double SalesTax = (MeterReading * Cost) + (PeakPrice * PeakMeterReading) * (percentage / 100);
+
+    Double total = SalesTax + (MeterReading * Cost) + fixed + (PeakPrice * PeakMeterReading);
+    System.out.println("--------------------");
+
+    row[0] = Taxes.get(3).getRegularUnitsPrice();
+    row[1] = Taxes.get(3).getPeakUnitsPrice();
+    row[2] = Taxes.get(3).getTaxRate();
+    row[3] = Taxes.get(3).getFixedCharges();
+    row[4] = MeterReading;
+    row[5] = PeakMeterReading;
+    row[6] = SalesTax;
+    row[7] = total;
   }
 
   public void ExpectedBill(String meterType, double MeterReading, String customerType, double PeakMeterReading) {

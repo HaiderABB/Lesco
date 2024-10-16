@@ -14,7 +14,7 @@ public class ManageBills {
   public JButton ViewBillsButton;
   public JButton PrintReportButton;
 
-  private JPanel cardPanel; // This will be the panel that changes based on button clicks
+  private JPanel cardPanel;
   private AddBillPanel addBillPanel;
   private ViewBillsPanel viewBillsPanel;
   private PrintReportPanel printReportPanel;

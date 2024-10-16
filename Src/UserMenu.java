@@ -132,8 +132,8 @@ public class UserMenu {
               ID = scanner.nextInt();
               scanner.nextLine();
             }
-            C.printCustomer(ID, cnic);
-            Bill.printBill(ID);
+            // C.printCustomer(ID, cnic);
+            // Bill.printBill(ID);
           } else if (input == 2) {
             System.out.println("Enter Meter Type (Single Phase or Three Phase): ");
             String meterType = scanner.nextLine();

@@ -307,19 +307,21 @@ public class Customers implements FileHandling {
     return "";
   }
 
-  public void printCustomer(int ID, BigInteger cnic) {
+  public void printCustomer(int ID, BigInteger cnic, Object[] row) {
     for (Customer c : customers) {
 
       int comparison = c.getCNIC().compareTo(cnic);
 
       if (c.getID() == ID && comparison == 0) {
-        System.out.println("Customer ID: " + c.getID());
-        System.out.println("Customer Name: " + c.getName());
-        System.out.println("Customer CNIC: " + c.getCNIC());
-        System.out.println("Customer Address: " + c.getAddress());
-        System.out.println("Phone Number: " + c.getPhoneNumber());
-        System.out.println("Customer Type: " + c.getCustomerType());
-        System.out.println("Meter Type: " + c.getMeterType());
+
+        row[0] = c.getID();
+        row[1] = c.getCNIC();
+        row[2] = c.getName();
+        row[3] = c.getAddress();
+        row[4] = c.getPhoneNumber();
+        row[5] = c.getCustomerType();
+        row[6] = c.getMeterType();
+
         break;
       }
     }
