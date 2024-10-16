@@ -9,6 +9,8 @@ import Views.DashboardSuper;
 import Views.Employee.Dashboard.ManageBills.ManageBills;
 import Views.Employee.Dashboard.ManageCustomer.ManageCustomer;
 import Views.Employee.Dashboard.ManageMeter.AddMeter;
+import Views.Employee.Dashboard.ManageTaxes.ManageTaxes;
+import Views.Employee.Dashboard.ViewExpiry.ViewExpiry;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -36,9 +38,10 @@ public class DashboardFrame extends DashboardSuper {
   public JButton JManageCustomer;// done
   public JButton JManageMeter;// done
 
-  public JButton JManageBills;
-  public JButton JTaxes;
+  public JButton JManageBills;// done
+  public JButton JTaxes;// done
   public JButton JExpiry;
+  public JButton JNadraData;
   public JButton JLogout;
 
   public JLabel JEmployeeName;
@@ -47,6 +50,8 @@ public class DashboardFrame extends DashboardSuper {
   public ManageCustomer ManageCustomerWindow;
   public AddMeter AddMeterWindow;
   public ManageBills ManageBillsWindow;
+  public ManageTaxes ManageTaxesWindow;
+  public ViewExpiry ViewExpiryWindow;
 
   Customers customerData;
   Bills billData;
@@ -123,9 +128,26 @@ public class DashboardFrame extends DashboardSuper {
 
     JExpiry = new JButton("View Expiry");
     styleButton(JExpiry);
+    JExpiry.addActionListener((ActionEvent e) -> {
+      ViewExpiryWindow = new ViewExpiry(nadraData);
+      SubPanel.removeAll();
+      SubPanel.add(ViewExpiryWindow.MainPanel, BorderLayout.CENTER);
+      SubPanel.revalidate();
+      SubPanel.repaint();
+    });
 
     JTaxes = new JButton("Update Taxes");
     styleButton(JTaxes);
+    JTaxes.addActionListener((ActionEvent e) -> {
+      ManageTaxesWindow = new ManageTaxes(billData);
+      SubPanel.removeAll();
+      SubPanel.add(ManageTaxesWindow.MainPanel, BorderLayout.CENTER);
+      SubPanel.revalidate();
+      SubPanel.repaint();
+    });
+
+    JNadraData = new JButton("View Nadra Data");
+    styleButton(JNadraData);
 
     JLogout = new JButton("Logout");
     JLogout.setBackground(EPcolor);

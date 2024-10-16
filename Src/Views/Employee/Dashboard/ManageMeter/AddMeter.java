@@ -33,18 +33,17 @@ public class AddMeter extends DashboardSuper {
 
   private void init() {
     MainPanel = new JPanel();
-    MainPanel.setLayout(new GridBagLayout()); // Use GridBagLayout for better control
+    MainPanel.setLayout(new GridBagLayout());
     MainPanel.setBackground(EPcolor);
-    MainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Adding padding to the panel
+    MainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
     GridBagConstraints gbc = new GridBagConstraints();
-    gbc.insets = new Insets(5, 5, 5, 5); // Adding padding between components
+    gbc.insets = new Insets(5, 5, 5, 5);
     gbc.fill = GridBagConstraints.HORIZONTAL;
 
-    // Create Labels and Fields with smaller sizes
     JLabel cnicLabel = new JLabel("CNIC:");
     cnicField = new JTextField();
-    cnicField.setPreferredSize(new Dimension(400, 60)); // Set a smaller size for the text fields
+    cnicField.setPreferredSize(new Dimension(400, 60));
 
     JLabel nameLabel = new JLabel("Name:");
     nameField = new JTextField();

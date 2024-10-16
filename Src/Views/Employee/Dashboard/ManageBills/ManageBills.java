@@ -50,8 +50,6 @@ public class ManageBills {
 
     addBillPanel = new AddBillPanel(customerData, billingData);
 
-    printReportPanel = new PrintReportPanel();
-
     cardPanel = new JPanel(new BorderLayout());
 
     cardPanel.add(addBillPanel, BorderLayout.CENTER);
@@ -76,6 +74,8 @@ public class ManageBills {
     PrintReportButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        printReportPanel = new PrintReportPanel(billingData);
+
         switchPanel(printReportPanel);
       }
     });

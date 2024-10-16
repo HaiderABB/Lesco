@@ -7,21 +7,32 @@ public class TariffTaxInfo {
   protected Double PeakUnitsPrice;
   protected Double TaxRate;
   protected Double FixedCharges;
+  protected String CustomerType;
 
   TariffTaxInfo() {
 
   }
 
-  TariffTaxInfo(String Phase, Double RegularUnitsPrice, Double PeakUnitsPrice, Double TaxRate, Double FixedCharges) {
+  TariffTaxInfo(String Phase, Double RegularUnitsPrice, Double PeakUnitsPrice, Double TaxRate, Double FixedCharges,
+      String CustomerType) {
     this.Phase = Phase;
     this.RegularUnitsPrice = RegularUnitsPrice;
     this.PeakUnitsPrice = PeakUnitsPrice;
     this.TaxRate = TaxRate;
     this.FixedCharges = FixedCharges;
+    this.CustomerType = CustomerType;
   }
 
   public String getPhase() {
     return Phase;
+  }
+
+  public String getCustomerType() {
+    return CustomerType;
+  }
+
+  public void setCustomerType(String phase) {
+    this.CustomerType = phase;
   }
 
   public void setPhase(String phase) {

@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -78,6 +79,28 @@ public class Nadra implements FileHandling {
         }
       }
     }
+  }
+
+  public ArrayList<NadraData> getExpired() {
+
+    ArrayList<NadraData> expiringCNICs = new ArrayList<>();
+
+    // Formatter for two-digit year (yy instead of yyyy)
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+
+    LocalDate today = LocalDate.now();
+    LocalDate dateIn30Days = today.plusDays(30);
+
+    for (NadraData cnicObj : Data) {
+
+      LocalDate expiryDate = LocalDate.parse(cnicObj.getExpiryDate(), formatter);
+
+      if (!expiryDate.isBefore(today) && expiryDate.isBefore(dateIn30Days)) {
+        expiringCNICs.add(cnicObj);
+      }
+    }
+
+    return expiringCNICs;
   }
 
   public void WriteToFile() {

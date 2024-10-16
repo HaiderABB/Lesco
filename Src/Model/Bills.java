@@ -40,14 +40,15 @@ public class Bills implements FileHandling {
         Double temp = 0.0;
         if (fields[2].isEmpty()) {
           TariffTaxInfo t = new TariffTaxInfo(fields[0], Double.parseDouble(fields[1]), temp,
-              Double.parseDouble(fields[3]), Double.parseDouble(fields[4]));
+              Double.parseDouble(fields[3]), Double.parseDouble(fields[4]), fields[5]);
           Taxes.add(t);
 
         }
 
         else {
+
           TariffTaxInfo t = new TariffTaxInfo(fields[0], Double.parseDouble(fields[1]), Double.parseDouble(fields[2]),
-              Double.parseDouble(fields[3]), Double.parseDouble(fields[4]));
+              Double.parseDouble(fields[3]), Double.parseDouble(fields[4]), fields[5]);
           Taxes.add(t);
 
         }
@@ -128,6 +129,36 @@ public class Bills implements FileHandling {
       try {
         if (reader != null)
           reader.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public void WriteTaxes() {
+    FileWriter fw = null;
+    BufferedWriter writer = null;
+
+    try {
+
+      fw = new FileWriter(TaxFile);
+      writer = new BufferedWriter(fw);
+
+      for (TariffTaxInfo bill : Taxes) {
+
+        String line = bill.getPhase() + "," +
+            bill.getRegularUnitsPrice() + "," + bill.getPeakUnitsPrice() + "," +
+            bill.getTaxRate() + "," +
+            bill.getFixedCharges() + "," +
+            bill.getCustomerType();
+        writer.write(line);
+        writer.newLine();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        writer.close();
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -288,6 +319,65 @@ public class Bills implements FileHandling {
     System.out.println("Total Paid Bills " + paid + ", Total Amount Paid  " + paidAmount);
     System.out.println("---------------------------------");
 
+  }
+
+  public int getUnpaidBills() {
+    int unpaid = 0;
+
+    for (Billing b : CustomerBills) {
+      if (b.isPaidStatus().equals("Unpaid")) {
+        ++unpaid;
+      }
+
+    }
+
+    return unpaid;
+  }
+
+  public int getPaidBills() {
+    int paid = 0;
+
+    for (Billing b : CustomerBills) {
+      if (b.isPaidStatus().equals("Unpaid")) {
+
+      } else {
+        ++paid;
+      }
+
+    }
+
+    return paid;
+  }
+
+  public double getUnpaidAmount() {
+    double unpaidAmount = 0.0;
+
+    for (Billing b : CustomerBills) {
+      if (b.isPaidStatus().equals("Unpaid")) {
+        unpaidAmount = unpaidAmount + b.getTotalAmount();
+      } else {
+
+      }
+
+    }
+
+    return unpaidAmount;
+  }
+
+  public double getPaidAmount() {
+    double paidAmount = 0.0;
+    ;
+
+    for (Billing b : CustomerBills) {
+      if (b.isPaidStatus().equals("Unpaid")) {
+
+      } else {
+        paidAmount = paidAmount + b.getTotalAmount();
+      }
+
+    }
+
+    return paidAmount;
   }
 
   public boolean printBill(int ID) {

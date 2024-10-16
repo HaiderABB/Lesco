@@ -6,6 +6,9 @@ import Views.DashboardSuper;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
@@ -25,6 +28,7 @@ public class ViewBillsPanel extends DashboardSuper {
 
   private int[] originalIndices;
   public Bills BillsData;
+  private HashMap<Integer, Integer> mostRecentBillIndices;
 
   public ViewBillsPanel(Bills B) {
     BillsData = B;
@@ -58,21 +62,36 @@ public class ViewBillsPanel extends DashboardSuper {
     BillsTable = new JTable(BillsModel) {
       @Override
       public boolean isCellEditable(int row, int column) {
-        return column == 14 || column == 15;
+        if (BillsData.CustomerBills.size() == 0)
+          return false; // No bills to edit
+        int billId = (int) BillsTable.getValueAt(row, 0);
+        int customerId = billId;
+        return (column == 14 || column == 15) && mostRecentBillIndices.get(customerId) != null
+            && row == mostRecentBillIndices.get(customerId);
       }
+
     };
     BillsTable.getColumn("Update").setCellRenderer(new ButtonRenderer());
     BillsTable.getColumn("Update").setCellEditor(new ButtonEditor("Update", true));
-
     BillsTable.getColumn("Delete").setCellRenderer(new ButtonRenderer());
     BillsTable.getColumn("Delete").setCellEditor(new ButtonEditor("Delete", false));
-
     scrollPane = new JScrollPane(BillsTable);
     scrollPane.setBorder(BorderFactory.createEmptyBorder(70, 10, 10, 10));
     scrollPane.setBackground(EPcolor);
   }
 
   private void loadBillsData(DefaultTableModel model) {
+    mostRecentBillIndices = new HashMap<>();
+    for (int i = 0; i < BillsData.CustomerBills.size(); i++) {
+      Billing bill = BillsData.CustomerBills.get(i);
+      int customerId = bill.getID();
+      LocalDate billDate = parseDate(bill.getEntryDate());
+      if (!mostRecentBillIndices.containsKey(customerId) ||
+          isBillMoreRecent(billDate,
+              BillsData.CustomerBills.get(mostRecentBillIndices.get(customerId)).getEntryDate())) {
+        mostRecentBillIndices.put(customerId, i);
+      }
+    }
     for (Billing c : BillsData.CustomerBills) {
       Object[] row = new Object[16];
       row[0] = c.getID();
@@ -85,21 +104,29 @@ public class ViewBillsPanel extends DashboardSuper {
       row[7] = c.getTotalAmount();
       row[8] = c.getDueDate();
       row[9] = c.getPaidStatus();
-      if (c.getPaidDate() == null || c.getPaidDate().equals("null")) {
-        row[10] = "-";
-        System.out.println("Here");
-
-      } else {
-        row[10] = c.getPaidDate();
-      }
+      row[10] = c.getPaidDate() == null || c.getPaidDate().equals("null") ? "-" : c.getPaidDate();
       row[11] = c.getTaxRate();
-      System.out.println(c.getPaidDate());
       row[12] = c.getRegularUnitsPrice();
       row[13] = c.getPeakUnitsPrice();
-      row[14] = "Update";
-      row[15] = "Delete";
+      if (mostRecentBillIndices.get(c.getID()).equals(BillsData.CustomerBills.indexOf(c))) {
+        row[14] = "Update";
+        row[15] = "Delete";
+      } else {
+        row[14] = "";
+        row[15] = "";
+      }
       model.addRow(row);
     }
+  }
+
+  private LocalDate parseDate(String dateStr) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    return LocalDate.parse(dateStr, formatter);
+  }
+
+  private boolean isBillMoreRecent(LocalDate currentBillDate, String existingBillDateStr) {
+    LocalDate existingBillDate = parseDate(existingBillDateStr);
+    return currentBillDate.isAfter(existingBillDate);
   }
 
   private void filterBillsData(String searchTerm) {
@@ -119,17 +146,17 @@ public class ViewBillsPanel extends DashboardSuper {
         row[7] = c.getTotalAmount();
         row[8] = c.getDueDate();
         row[9] = c.getPaidStatus();
-        if (c.getPaidDate() == null || c.getPaidDate().equals("null")) {
-          row[10] = "-";
-
-        } else {
-          row[10] = c.getPaidDate();
-        }
+        row[10] = c.getPaidDate() == null || c.getPaidDate().equals("null") ? "-" : c.getPaidDate();
         row[11] = c.getTaxRate();
         row[12] = c.getRegularUnitsPrice();
         row[13] = c.getPeakUnitsPrice();
-        row[14] = "Update";
-        row[15] = "Delete";
+        if (mostRecentBillIndices.get(c.getID()).equals(BillsData.CustomerBills.indexOf(c))) {
+          row[14] = "Update";
+          row[15] = "Delete";
+        } else {
+          row[14] = "";
+          row[15] = "";
+        }
         model.addRow(row);
         originalIndices[currentIndex] = BillsData.CustomerBills.indexOf(c);
         currentIndex++;
@@ -164,67 +191,76 @@ public class ViewBillsPanel extends DashboardSuper {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      System.out.println("Button Clicked");
       if (isUpdate) {
         updateBillsData();
       } else {
         deleteBillsData();
+        System.out.println("HRER4");
+
       }
+      System.out.println("HRER5");
 
       fireEditingStopped();
+      System.out.println("HRER3");
     }
 
     private void updateBillsData() {
       Billing bill = BillsData.CustomerBills.get(originalIndices[row]);
-
-      JTextField regularReadingField = new JTextField(String.valueOf(bill.getCurrentRegularReading()));
-      JTextField peakReadingField = new JTextField(String.valueOf(bill.getCurrentPeakReading()));
       JTextField paidStatusField = new JTextField(bill.getPaidStatus());
-
-      JPanel panel = new JPanel(new GridLayout(3, 2));
-      panel.add(new JLabel("Current Regular Reading:"));
-      panel.add(regularReadingField);
-      panel.add(new JLabel("Current Peak Reading:"));
-      panel.add(peakReadingField);
-      panel.add(new JLabel("Paid Status:"));
-      panel.add(paidStatusField);
-
-      int option = JOptionPane.showConfirmDialog(button, panel, "Update Bill Information", JOptionPane.OK_CANCEL_OPTION,
-          JOptionPane.PLAIN_MESSAGE);
-
-      if (option == JOptionPane.OK_OPTION) {
+      int result = JOptionPane.showConfirmDialog(button, paidStatusField, "Update Paid Status",
+          JOptionPane.OK_CANCEL_OPTION);
+      if (result == JOptionPane.OK_OPTION) {
         try {
-          double currentRegularReading = Double.parseDouble(regularReadingField.getText());
-          double currentPeakReading = Double.parseDouble(peakReadingField.getText());
           String paidStatus = paidStatusField.getText();
+          if (paidStatus.equalsIgnoreCase("Paid") || paidStatus.equalsIgnoreCase("Unpaid")) {
+            bill.setPaidStatus(paidStatus);
+            DefaultTableModel model = (DefaultTableModel) BillsTable.getModel();
+            model.setValueAt(paidStatus, row, 9);
+            BillsData.WriteToFile();
 
-          bill.setCurrentRegularReading(currentRegularReading);
-          bill.setCurrentPeakReading(currentPeakReading);
-          bill.setPaidStatus(paidStatus);
-
-          DefaultTableModel model = (DefaultTableModel) BillsTable.getModel();
-          model.setValueAt(bill.getCurrentRegularReading(), row, 2);
-          model.setValueAt(bill.getCurrentPeakReading(), row, 4);
-          model.setValueAt(bill.getPaidStatus(), row, 9);
-
-          BillsData.WriteToFile();
-          JOptionPane.showMessageDialog(button, "Data Updated Successfully");
-
-        } catch (NumberFormatException ex) {
-          JOptionPane.showMessageDialog(button, "Invalid number format in one of the fields.");
+            JOptionPane.showMessageDialog(button, "Bill Updated Successfully");
+          } else {
+            JOptionPane.showMessageDialog(button, "Please enter a valid status (Paid/Unpaid)", "Invalid Input",
+                JOptionPane.WARNING_MESSAGE);
+          }
         } catch (Exception ex) {
-          JOptionPane.showMessageDialog(button, "Unexpected error occurred.");
+          JOptionPane.showMessageDialog(button, "Error updating bill: " + ex.getMessage(), "Error",
+              JOptionPane.ERROR_MESSAGE);
         }
       }
     }
 
     private void deleteBillsData() {
-      DefaultTableModel model = (DefaultTableModel) BillsTable.getModel();
-      BillsData.CustomerBills.remove(originalIndices[row]);
-      model.removeRow(row); // Remove the row from the table
-      BillsData.WriteToFile();
-      JOptionPane.showMessageDialog(button, "Bill Deleted Successfully");
+      int confirmation = JOptionPane.showConfirmDialog(button, "Are you sure you want to delete this bill?",
+          "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+      if (confirmation == JOptionPane.YES_OPTION) {
+        DefaultTableModel model = (DefaultTableModel) BillsTable.getModel();
+        BillsData.CustomerBills.remove(originalIndices[row]);
+        model.removeRow(row);
+        BillsData.WriteToFile();
+        System.out.println("HERE 2");
+
+        updateMostRecentBillIndices(); // Recalculate indices after deletion
+        JOptionPane.showMessageDialog(button, "Bill Deleted Successfully");
+      }
+
     }
+
+    private void updateMostRecentBillIndices() {
+      mostRecentBillIndices.clear(); // Clear current indices
+      for (int i = 0; i < BillsData.CustomerBills.size(); i++) {
+        Billing bill = BillsData.CustomerBills.get(i);
+        int customerId = bill.getID();
+        LocalDate billDate = parseDate(bill.getEntryDate());
+        if (!mostRecentBillIndices.containsKey(customerId) ||
+            isBillMoreRecent(billDate,
+                BillsData.CustomerBills.get(mostRecentBillIndices.get(customerId)).getEntryDate())) {
+          mostRecentBillIndices.put(customerId, i);
+        }
+      }
+      System.out.println("HERE 1");
+    }
+
   }
 
   class ButtonRenderer extends JButton implements TableCellRenderer {
@@ -232,9 +268,19 @@ public class ViewBillsPanel extends DashboardSuper {
       setOpaque(true);
     }
 
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
         int row, int column) {
-      setText((value == null) ? "" : value.toString());
+      if (value != null) {
+        setText(value.toString());
+      }
+
+      if (isSelected) {
+        setBackground(Color.YELLOW);
+      } else {
+        setBackground(Color.LIGHT_GRAY);
+      }
+
       return this;
     }
   }
