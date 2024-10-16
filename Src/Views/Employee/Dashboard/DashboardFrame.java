@@ -64,13 +64,13 @@ public class DashboardFrame extends DashboardSuper {
       Customers C,
       Employees E,
       MeterInfo M,
-      Nadra N) {
-    setName("Talha Tariq");
+      Nadra N, String s) {
 
     customerData = C;
     billData = B;
     meterData = M;
     nadraData = N;
+    EmployeeName = s;
 
     init();
 
@@ -87,7 +87,6 @@ public class DashboardFrame extends DashboardSuper {
     initSubPanel();
 
     mainFrame.pack();
-    mainFrame.setVisible(true);
   }
 
   void initPanels() {
@@ -173,6 +172,7 @@ public class DashboardFrame extends DashboardSuper {
         billData.WriteToFile();
         meterData.WriteToFile();
         nadraData.WriteToFile();
+        mainFrame.dispose();
       }
     });
 

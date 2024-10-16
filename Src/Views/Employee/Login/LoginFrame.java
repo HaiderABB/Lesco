@@ -1,23 +1,47 @@
 package Views.Employee.Login;
 
+import Model.Bills;
+import Model.Customers;
+import Model.Employees;
+import Model.MeterInfo;
+import Model.Nadra;
+import Views.Employee.Dashboard.DashboardFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class LoginFrame {
 
-  JFrame mainFrame;
-  JTextField JUsernameField;
-  JTextField JPasswordField;
+  public JFrame mainFrame;
+  public JTextField JUsernameField;
+  JPasswordField JPasswordField; // Changed to JPasswordField
   JButton JSubmitButton;
   JLabel JUserLabel;
   JLabel JPassLabel;
   JPanel inputPanel;
+  Employees Employee;
+  Customers customerData;
+  Bills billData;
+  MeterInfo meterData;
+  Nadra nadraData;
+  DashboardFrame D;
 
-  public LoginFrame() {
+  public LoginFrame(DashboardFrame DF, Bills B,
+      Customers C,
+      Employees E,
+      MeterInfo M,
+      Nadra N) {
+    D = DF;
+    billData = B;
+    customerData = C;
+    nadraData = N;
+    meterData = M;
+    D = DF;
+    Employee = new Employees();
     init();
   }
 
@@ -42,7 +66,7 @@ public class LoginFrame {
     JUsernameField.setPreferredSize(new Dimension(200, 30));
 
     JPassLabel = new JLabel("Password:");
-    JPasswordField = new JTextField();
+    JPasswordField = new JPasswordField();
     JPasswordField.setPreferredSize(new Dimension(200, 30));
 
     inputPanel.add(JUserLabel);
@@ -59,10 +83,18 @@ public class LoginFrame {
     JSubmitButton.setPreferredSize(new Dimension(20, 40));
     JSubmitButton.setBackground(MPcolor);
     JSubmitButton.setForeground(EPcolor);
+    JSubmitButton.addActionListener((ActionEvent e) -> {
+      if (Employee.LogIn(JUsernameField.getText(), JPasswordField.getText())) {
+        D = new DashboardFrame(billData, customerData, Employee, meterData, nadraData, JUsernameField.getText());
+        D.mainFrame.setVisible(true);
+
+      }
+    });
+
     mainFrame.add(JSubmitButton, BorderLayout.SOUTH);
   }
 
   public static void main(String[] args) {
-    new LoginFrame();
+
   }
 }
