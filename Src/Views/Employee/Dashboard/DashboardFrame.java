@@ -11,6 +11,7 @@ import Views.Employee.Dashboard.ManageCustomer.ManageCustomer;
 import Views.Employee.Dashboard.ManageMeter.AddMeter;
 import Views.Employee.Dashboard.ManageTaxes.ManageTaxes;
 import Views.Employee.Dashboard.ViewExpiry.ViewExpiry;
+import Views.Employee.Dashboard.ViewNadraData.ViewNadra;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -52,6 +53,7 @@ public class DashboardFrame extends DashboardSuper {
   public ManageBills ManageBillsWindow;
   public ManageTaxes ManageTaxesWindow;
   public ViewExpiry ViewExpiryWindow;
+  public ViewNadra ViewNadraWindow;
 
   Customers customerData;
   Bills billData;
@@ -148,6 +150,13 @@ public class DashboardFrame extends DashboardSuper {
 
     JNadraData = new JButton("View Nadra Data");
     styleButton(JNadraData);
+    JNadraData.addActionListener((ActionEvent e) -> {
+      ViewNadraWindow = new ViewNadra(nadraData);
+      SubPanel.removeAll();
+      SubPanel.add(ViewNadraWindow.MainPanel, BorderLayout.CENTER);
+      SubPanel.revalidate();
+      SubPanel.repaint();
+    });
 
     JLogout = new JButton("Logout");
     JLogout.setBackground(EPcolor);
@@ -260,6 +269,7 @@ public class DashboardFrame extends DashboardSuper {
 
     ButtonPanel.add(JTaxes);
     ButtonPanel.add(JExpiry);
+    ButtonPanel.add(JNadraData);
     ButtonPanel.setBackground(EPcolor);
   }
 
