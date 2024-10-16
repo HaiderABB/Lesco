@@ -1,13 +1,14 @@
 package Views.Customer.Dashboard.ViewBill;
 
+import Model.Bills;
+import Model.Customers;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigInteger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
-import Model.Bills;
 
 public class BillByMeter {
   public JPanel mainPanel;
@@ -17,6 +18,7 @@ public class BillByMeter {
   private JComboBox<String> meterTypeComboBox;
   private JComboBox<String> customerTypeComboBox;
 
+  // Define bill information columns
   public String[] SinglePhaseDomestic = {
       "Regular Units Price", "Tax Rate", "Fixed Charges", "Meter Reading", "Sales Tax", "Total Amount"
   };
@@ -32,13 +34,36 @@ public class BillByMeter {
       "Commercial Tax", "Total Amount"
   };
 
+  // Customer Data Columns
+  public String[] CustomerColumnNames = {
+      "ID", "CNIC", "Name", "Address", "Phone", "Customer Type", "Meter Type"
+  };
+
+  // Bill Information Columns
+  public String[] BillColumnNames = {
+      "Current Regular Reading", "Current Peak Reading", "Regular Unit Price", "Peak Unit Price", "Taxed Amount",
+      "Fixed Charges", "Total Amount", "Due Date", "Payment Date", "Tax Rate"
+  };
+
   private JLabel messageLabel;
   private JTable billTable;
+  private JTable customerTable; // New table for customer data
+  private JTable lescoBillTable; // New table for LESCO billing information
   private JScrollPane scrollPane;
-  public Bills bills;
+  private JScrollPane customerScrollPane;
+  private JScrollPane lescoScrollPane; // New scroll pane for LESCO billing information
 
-  public BillByMeter(Bills B) {
-    bills = B;
+  public Bills bill;
+  public Customers customerData;
+  public int ID;
+  public BigInteger CNIC;
+
+  public BillByMeter(Bills b, Customers d, int ID, BigInteger cnic) {
+    this.ID = ID;
+    System.out.println(ID);
+    CNIC = cnic;
+    bill = b;
+    customerData = d;
     init();
   }
 
@@ -70,7 +95,7 @@ public class BillByMeter {
           peakReadingField.setEnabled(true);
         } else {
           peakReadingField.setEnabled(false);
-          peakReadingField.setText(""); // Clear peak reading if it's Single Phase
+          peakReadingField.setText("");
         }
       }
     });
@@ -94,7 +119,7 @@ public class BillByMeter {
     formPanel.add(regularReadingField);
     formPanel.add(peakReadingLabel);
     formPanel.add(peakReadingField);
-    formPanel.add(new JLabel()); // Empty space in grid
+    formPanel.add(new JLabel());
     formPanel.add(submitButton);
 
     mainPanel.add(formPanel, BorderLayout.CENTER);
@@ -126,7 +151,15 @@ public class BillByMeter {
         return;
       }
 
+      mainPanel.removeAll();
       displayBillTable(meterType, customerType);
+      displayCustomerTable();
+      displayLescoBillTable(regularReading, peakReading, meterType, customerType);
+      mainPanel.add(scrollPane, BorderLayout.NORTH);
+      mainPanel.add(customerScrollPane, BorderLayout.CENTER);
+      mainPanel.add(lescoScrollPane, BorderLayout.SOUTH);
+      mainPanel.revalidate();
+      mainPanel.repaint();
 
     } catch (NumberFormatException ex) {
       messageLabel.setText("Error: Please enter valid numbers for the readings.");
@@ -140,7 +173,7 @@ public class BillByMeter {
       DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
       Object[] rowData = new Object[columns.length];
 
-      bills.ExpectedBillSingleDomestic(Double.parseDouble(regularReadingField.getText()), rowData);
+      bill.ExpectedBillSingleDomestic(Double.parseDouble(regularReadingField.getText()), rowData);
       tableModel.addRow(rowData);
 
       billTable = new JTable(tableModel);
@@ -150,7 +183,7 @@ public class BillByMeter {
       DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
       Object[] rowData = new Object[columns.length];
 
-      bills.ExpectedBillSingleCommercial(Double.parseDouble(regularReadingField.getText()), rowData);
+      bill.ExpectedBillSingleCommercial(Double.parseDouble(regularReadingField.getText()), rowData);
       tableModel.addRow(rowData);
 
       billTable = new JTable(tableModel);
@@ -159,18 +192,18 @@ public class BillByMeter {
       DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
       Object[] rowData = new Object[columns.length];
 
-      bills.ExpectedBillThreeDomestic(Double.parseDouble(regularReadingField.getText()),
+      bill.ExpectedBillThreeDomestic(Double.parseDouble(regularReadingField.getText()),
           Double.parseDouble(peakReadingField.getText()), rowData);
       tableModel.addRow(rowData);
 
       billTable = new JTable(tableModel);
     } else if (meterType.equals("Three Phase") && customerType.equals("Commercial")) {
       columns = ThreePhaseCommercial;
-      columns = ThreePhaseDomestic;
+
       DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
       Object[] rowData = new Object[columns.length];
 
-      bills.ExpectedBillThreeCommercial(Double.parseDouble(regularReadingField.getText()),
+      bill.ExpectedBillThreeCommercial(Double.parseDouble(regularReadingField.getText()),
           Double.parseDouble(peakReadingField.getText()), rowData);
       tableModel.addRow(rowData);
 
@@ -181,14 +214,51 @@ public class BillByMeter {
       mainPanel.remove(scrollPane);
     }
     scrollPane = new JScrollPane(billTable);
-    mainPanel.add(scrollPane, BorderLayout.NORTH);
-    mainPanel.revalidate();
-    mainPanel.repaint();
 
     messageLabel.setText("Success! Table displayed based on " + meterType + " and " + customerType);
   }
 
-  public static void main(String[] args) {
+  private void displayCustomerTable() {
+    System.out.println("Here in customer");
+    DefaultTableModel customerTableModel = new DefaultTableModel(CustomerColumnNames, 0);
+    Object[] customerRowData = new Object[CustomerColumnNames.length];
+    System.out.println(CNIC);
+    System.out.println(ID);
 
+    customerData.printCustomer(ID, CNIC, customerRowData);
+    customerTableModel.addRow(customerRowData);
+    System.out.println(customerRowData[0]);
+    customerTable = new JTable(customerTableModel);
+
+    // Add customerTable to the customerScrollPane and then to the mainPanel
+    customerScrollPane = new JScrollPane(customerTable);
+    mainPanel.add(customerScrollPane, BorderLayout.CENTER); // Adjust the layout if needed
+
+    // Don't forget to revalidate and repaint
+    mainPanel.revalidate();
+    mainPanel.repaint();
   }
+
+  private void displayLescoBillTable(double regularReading, double peakReading, String meterType, String customerType) {
+    System.out.println("Here in lesco");
+
+    DefaultTableModel lescoTableModel = new DefaultTableModel(BillColumnNames, 0);
+    Object[] lescoRowData = new Object[BillColumnNames.length];
+    System.out.println(ID);
+
+    if (bill.printBill(ID, lescoRowData)) {
+      lescoTableModel.addRow(lescoRowData);
+      lescoBillTable = new JTable(lescoTableModel);
+      System.out.println(lescoRowData[0]);
+
+      // Add lescoBillTable to the lescoScrollPane and then to the mainPanel
+      lescoScrollPane = new JScrollPane(lescoBillTable);
+      mainPanel.add(lescoScrollPane, BorderLayout.SOUTH); // Adjust the layout if needed
+
+      // Don't forget to revalidate and repaint
+      mainPanel.revalidate();
+      mainPanel.repaint();
+    }
+  }
+
 }

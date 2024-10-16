@@ -47,10 +47,12 @@ public class DashboardFrame extends DashboardSuper {
   Bills billData;
   Nadra nadraData;
   Customers customerData;
+  public int ID;
 
   public DashboardFrame(Customers C, Bills B,
-      Nadra N, String s, BigInteger CNIC) {
+      Nadra N, String s, BigInteger CNIC, int ID) {
 
+    this.ID = ID;
     customerData = C;
     billData = B;
     nadraData = N;
@@ -95,7 +97,7 @@ public class DashboardFrame extends DashboardSuper {
     JViewBill = new JButton("View Bills");
     styleButton(JViewBill);
     JViewBill.addActionListener((ActionEvent e) -> {
-      ViewBillWindow = new ViewBill(customerData, billData, CNIC);
+      ViewBillWindow = new ViewBill(customerData, billData, CNIC, ID);
       SubPanel.removeAll();
       SubPanel.add(ViewBillWindow.MainPanel, BorderLayout.CENTER);
       SubPanel.revalidate();

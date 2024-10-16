@@ -21,11 +21,14 @@ public class ViewBill {
 
   Customers customerData;
   Bills billingData;
+  public int userID;
 
-  public ViewBill(Customers customerData, Bills billingData, BigInteger c) {
+  public ViewBill(Customers customerData, Bills billingData, BigInteger c, int userID) {
     this.customerData = customerData;
     this.billingData = billingData;
     this.cnic = c;
+
+    this.userID = userID;
     init();
   }
 
@@ -65,7 +68,7 @@ public class ViewBill {
     ViewBillByMeter.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        BillByMeterPanel = new BillByMeter(billingData);
+        BillByMeterPanel = new BillByMeter(billingData, customerData, userID, cnic);
         switchPanel(BillByMeterPanel.mainPanel);
       }
     });

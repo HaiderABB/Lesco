@@ -84,7 +84,8 @@ public class LoginFrame {
       BigInteger n = new BigInteger(JPasswordField.getText());
 
       if (customerData.LogIn(Integer.parseInt(JUsernameField.getText()), n)) {
-        D = new DashboardFrame(customerData, billData, nadraData, JUsernameField.getText(), n);
+        D = new DashboardFrame(customerData, billData, nadraData, JUsernameField.getText(), n,
+            Integer.parseInt(JUsernameField.getText()));
         D.mainFrame.setVisible(true);
 
       }

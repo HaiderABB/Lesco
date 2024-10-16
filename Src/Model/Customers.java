@@ -313,7 +313,7 @@ public class Customers implements FileHandling {
       int comparison = c.getCNIC().compareTo(cnic);
 
       if (c.getID() == ID && comparison == 0) {
-
+        System.err.println(c.getID());
         row[0] = c.getID();
         row[1] = c.getCNIC();
         row[2] = c.getName();
