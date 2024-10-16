@@ -14,7 +14,10 @@ public class ManageBills {
   public JButton ViewBillsButton;
   public JButton PrintReportButton;
 
-  private CardLayout cardLayout;
+  private JPanel cardPanel; // This will be the panel that changes based on button clicks
+  private AddBillPanel addBillPanel;
+  private ViewBillsPanel viewBillsPanel;
+  private PrintReportPanel printReportPanel;
 
   Customers customerData;
   Bills billingData;
@@ -28,8 +31,6 @@ public class ManageBills {
   private void init() {
     MainPanel = new JPanel();
     MainPanel.setLayout(new BorderLayout());
-
-    cardLayout = new CardLayout();
 
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
     AddBillButton = new JButton("Add Bill");
@@ -47,39 +48,44 @@ public class ManageBills {
 
     MainPanel.add(buttonPanel, BorderLayout.NORTH);
 
-    JPanel cardPanel = new JPanel(cardLayout);
-    AddBillPanel addBillPanel = new AddBillPanel(customerData, billingData);
-    ViewBillsPanel viewBillsPanel = new ViewBillsPanel();
-    PrintReportPanel printReportPanel = new PrintReportPanel();
+    addBillPanel = new AddBillPanel(customerData, billingData);
 
-    cardPanel.add(addBillPanel, "AddBillPanel");
-    cardPanel.add(viewBillsPanel.MainPanel, "ViewBillsPanel");
-    cardPanel.add(printReportPanel, "PrintReportPanel");
+    printReportPanel = new PrintReportPanel();
+
+    cardPanel = new JPanel(new BorderLayout());
+
+    cardPanel.add(addBillPanel, BorderLayout.CENTER);
 
     MainPanel.add(cardPanel, BorderLayout.CENTER);
 
     AddBillButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        cardLayout.show(cardPanel, "AddBillPanel");
+        switchPanel(addBillPanel);
       }
     });
 
     ViewBillsButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        cardLayout.show(cardPanel, "ViewBillsPanel");
+        viewBillsPanel = new ViewBillsPanel(billingData);
+        switchPanel(viewBillsPanel.MainPanel);
       }
     });
 
     PrintReportButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        cardLayout.show(cardPanel, "PrintReportPanel");
+        switchPanel(printReportPanel);
       }
     });
+  }
 
-    cardLayout.show(cardPanel, "AddBillPanel");
+  private void switchPanel(JPanel newPanel) {
+    cardPanel.removeAll();
+    cardPanel.add(newPanel, BorderLayout.CENTER);
+    cardPanel.revalidate();
+    cardPanel.repaint();
   }
 
   public static void main(String[] args) {
@@ -87,7 +93,7 @@ public class ManageBills {
     ManageBills manageBills = new ManageBills(new Customers(), new Bills());
     frame.setContentPane(manageBills.MainPanel);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(400, 300);
+    frame.setSize(600, 400);
     frame.setVisible(true);
   }
 }

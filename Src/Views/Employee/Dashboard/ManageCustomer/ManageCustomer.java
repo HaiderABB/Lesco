@@ -59,7 +59,7 @@ public class ManageCustomer extends DashboardSuper {
     CustomerTable = new JTable(CustomerModel) {
       @Override
       public boolean isCellEditable(int row, int column) {
-        return column == 10 || column == 11; // Only update/delete columns are editable
+        return column == 10 || column == 11;
       }
     };
     CustomerTable.getColumn("Update").setCellRenderer(new ButtonRenderer());
@@ -92,7 +92,7 @@ public class ManageCustomer extends DashboardSuper {
 
   private void filterCustomerData(String searchTerm) {
     DefaultTableModel model = (DefaultTableModel) CustomerTable.getModel();
-    model.setRowCount(0); // Clear existing table rows
+    model.setRowCount(0);
     int currentIndex = 0;
     for (Customer c : customerData.customers) {
       if (String.valueOf(c.getID()).contains(searchTerm)) {
@@ -110,7 +110,7 @@ public class ManageCustomer extends DashboardSuper {
         row[10] = "Update";
         row[11] = "Delete";
         model.addRow(row);
-        originalIndices[currentIndex] = customerData.customers.indexOf(c); // Track the original index of the customer
+        originalIndices[currentIndex] = customerData.customers.indexOf(c);
         currentIndex++;
       }
     }
@@ -143,7 +143,7 @@ public class ManageCustomer extends DashboardSuper {
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-      this.row = table.convertRowIndexToModel(row); // Correct row tracking for update/delete actions
+      this.row = table.convertRowIndexToModel(row);
       this.label = (value == null) ? "" : value.toString();
       button.setText(label);
       return button;
@@ -262,9 +262,8 @@ public class ManageCustomer extends DashboardSuper {
     private void deleteCustomerData() {
       int confirmation = JOptionPane.showConfirmDialog(button, "Are you sure you want to delete this customer?");
       if (confirmation == JOptionPane.YES_OPTION) {
-        // Delete the customer from the data
+
         customerData.customers.remove(originalIndices[row]);
-        // Save changes to the file
         customerData.WriteToFile();
         meterInfo.WriteToFile();
         JOptionPane.showMessageDialog(button, "Customer deleted successfully");

@@ -14,9 +14,9 @@ public class AddBillPanel extends JPanel {
   Customers customerData;
   Bills billingData;
 
-  public AddBillPanel(Customers customerData, Bills billingData) {
-    this.customerData = customerData;
-    this.billingData = billingData;
+  public AddBillPanel(Customers C, Bills B) {
+    this.customerData = C;
+    this.billingData = B;
     setLayout(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.insets = new Insets(10, 10, 10, 10);
