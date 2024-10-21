@@ -52,7 +52,6 @@ public class Employees implements FileHandling {
   public void ReadFromFile() {
     FileReader fr = null;
     BufferedReader reader = null;
-    System.out.println("Reading");
     try {
       fr = new FileReader(EMPLOYEE_DATA);
       reader = new BufferedReader(fr);

@@ -186,7 +186,6 @@ public class ManageTaxes extends DashboardSuper {
 
       } else {
         fields = new JTextField[4];
-        System.out.println(ColumnNames.length);
         panel.setLayout(new GridLayout(fields.length, 2));
         int j = 2;
         for (int i = 0; i < fields.length; i++) {

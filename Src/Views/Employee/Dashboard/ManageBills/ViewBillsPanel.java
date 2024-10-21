@@ -195,13 +195,10 @@ public class ViewBillsPanel extends DashboardSuper {
         updateBillsData();
       } else {
         deleteBillsData();
-        System.out.println("HRER4");
 
       }
-      System.out.println("HRER5");
 
       fireEditingStopped();
-      System.out.println("HRER3");
     }
 
     private void updateBillsData() {
@@ -238,7 +235,6 @@ public class ViewBillsPanel extends DashboardSuper {
         BillsData.CustomerBills.remove(originalIndices[row]);
         model.removeRow(row);
         BillsData.WriteToFile();
-        System.out.println("HERE 2");
 
         updateMostRecentBillIndices(); // Recalculate indices after deletion
         JOptionPane.showMessageDialog(button, "Bill Deleted Successfully");

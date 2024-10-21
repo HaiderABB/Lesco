@@ -60,7 +60,6 @@ public class BillByMeter {
 
   public BillByMeter(Bills b, Customers d, int ID, BigInteger cnic) {
     this.ID = ID;
-    System.out.println(ID);
     CNIC = cnic;
     bill = b;
     customerData = d;
@@ -219,15 +218,11 @@ public class BillByMeter {
   }
 
   private void displayCustomerTable() {
-    System.out.println("Here in customer");
     DefaultTableModel customerTableModel = new DefaultTableModel(CustomerColumnNames, 0);
     Object[] customerRowData = new Object[CustomerColumnNames.length];
-    System.out.println(CNIC);
-    System.out.println(ID);
 
     customerData.printCustomer(ID, CNIC, customerRowData);
     customerTableModel.addRow(customerRowData);
-    System.out.println(customerRowData[0]);
     customerTable = new JTable(customerTableModel);
 
     // Add customerTable to the customerScrollPane and then to the mainPanel
@@ -240,16 +235,13 @@ public class BillByMeter {
   }
 
   private void displayLescoBillTable(double regularReading, double peakReading, String meterType, String customerType) {
-    System.out.println("Here in lesco");
 
     DefaultTableModel lescoTableModel = new DefaultTableModel(BillColumnNames, 0);
     Object[] lescoRowData = new Object[BillColumnNames.length];
-    System.out.println(ID);
 
     if (bill.printBill(ID, lescoRowData)) {
       lescoTableModel.addRow(lescoRowData);
       lescoBillTable = new JTable(lescoTableModel);
-      System.out.println(lescoRowData[0]);
 
       // Add lescoBillTable to the lescoScrollPane and then to the mainPanel
       lescoScrollPane = new JScrollPane(lescoBillTable);

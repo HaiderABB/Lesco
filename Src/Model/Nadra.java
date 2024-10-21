@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -46,7 +45,7 @@ public class Nadra implements FileHandling {
         String[] fields = line.split(",");
 
         if (fields.length < 3) {
-          System.out.println("Skipping incomplete line: " + line);
+
           continue;
         }
 

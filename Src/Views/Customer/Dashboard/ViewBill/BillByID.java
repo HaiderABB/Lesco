@@ -1,7 +1,6 @@
 package Views.Customer.Dashboard.ViewBill;
 
 import Model.Bills;
-import Model.Customer;
 import Model.Customers;
 import Views.DashboardSuper;
 import java.awt.BorderLayout;

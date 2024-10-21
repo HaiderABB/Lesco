@@ -40,7 +40,7 @@ public class Customers implements FileHandling {
         String[] fields = line.split(",");
 
         if (fields.length < 10) {
-          System.out.println("Skipping incomplete line: " + line);
+
           continue;
         }
 
@@ -127,7 +127,6 @@ public class Customers implements FileHandling {
 
       fw = new FileWriter(IDFile);
       writer = new BufferedWriter(fw);
-      System.out.println(Current);
 
       String line = Current + "";
       writer.write(line);
