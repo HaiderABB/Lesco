@@ -192,12 +192,12 @@ public class UserMenu {
 
           System.out.println("------------------------------------");
           System.out.println("Your Billing Details are as follows:");
-          if (!Bill.printBill(ID)) {
-            System.out.println("Bill not found for this month:");
-          } else {
-            C.printCustomer(ID, cnic);
-          }
-          Bill.WriteToFile();
+          // if (!Bill.printBill(ID)) {
+          // System.out.println("Bill not found for this month:");
+          // } else {
+          // // C.printCustomer(ID, cnic);
+          // }
+          // Bill.WriteToFile();
           break;
         case 3:
           System.out.println("Logging out...");
