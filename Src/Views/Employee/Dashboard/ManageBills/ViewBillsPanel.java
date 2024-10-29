@@ -63,7 +63,7 @@ public class ViewBillsPanel extends DashboardSuper {
       @Override
       public boolean isCellEditable(int row, int column) {
         if (BillsData.CustomerBills.size() == 0)
-          return false; // No bills to edit
+          return false;
         int billId = (int) BillsTable.getValueAt(row, 0);
         int customerId = billId;
         return (column == 14 || column == 15) && mostRecentBillIndices.get(customerId) != null
@@ -236,14 +236,14 @@ public class ViewBillsPanel extends DashboardSuper {
         model.removeRow(row);
         BillsData.WriteToFile();
 
-        updateMostRecentBillIndices(); // Recalculate indices after deletion
+        updateMostRecentBillIndices();
         JOptionPane.showMessageDialog(button, "Bill Deleted Successfully");
       }
 
     }
 
     private void updateMostRecentBillIndices() {
-      mostRecentBillIndices.clear(); // Clear current indices
+      mostRecentBillIndices.clear();
       for (int i = 0; i < BillsData.CustomerBills.size(); i++) {
         Billing bill = BillsData.CustomerBills.get(i);
         int customerId = bill.getID();
@@ -254,7 +254,6 @@ public class ViewBillsPanel extends DashboardSuper {
           mostRecentBillIndices.put(customerId, i);
         }
       }
-      System.out.println("HERE 1");
     }
 
   }

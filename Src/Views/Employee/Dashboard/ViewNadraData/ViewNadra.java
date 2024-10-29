@@ -106,7 +106,6 @@ public class ViewNadra extends DashboardSuper {
         row[2] = c.getExpiryDate();
         model.addRow(row);
 
-        // Update original indices
         if (currentIndex < originalIndices.length) {
           originalIndices[currentIndex] = nadra.Data.indexOf(c);
         }

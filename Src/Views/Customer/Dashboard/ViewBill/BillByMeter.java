@@ -18,7 +18,6 @@ public class BillByMeter {
   private JComboBox<String> meterTypeComboBox;
   private JComboBox<String> customerTypeComboBox;
 
-  // Define bill information columns
   public String[] SinglePhaseDomestic = {
       "Regular Units Price", "Tax Rate", "Fixed Charges", "Meter Reading", "Sales Tax", "Total Amount"
   };
@@ -34,12 +33,10 @@ public class BillByMeter {
       "Commercial Tax", "Total Amount"
   };
 
-  // Customer Data Columns
   public String[] CustomerColumnNames = {
       "ID", "CNIC", "Name", "Address", "Phone", "Customer Type", "Meter Type"
   };
 
-  // Bill Information Columns
   public String[] BillColumnNames = {
       "Current Regular Reading", "Current Peak Reading", "Regular Unit Price", "Peak Unit Price", "Taxed Amount",
       "Fixed Charges", "Total Amount", "Due Date", "Payment Date", "Tax Rate"
@@ -225,11 +222,9 @@ public class BillByMeter {
     customerTableModel.addRow(customerRowData);
     customerTable = new JTable(customerTableModel);
 
-    // Add customerTable to the customerScrollPane and then to the mainPanel
     customerScrollPane = new JScrollPane(customerTable);
-    mainPanel.add(customerScrollPane, BorderLayout.CENTER); // Adjust the layout if needed
+    mainPanel.add(customerScrollPane, BorderLayout.CENTER);
 
-    // Don't forget to revalidate and repaint
     mainPanel.revalidate();
     mainPanel.repaint();
   }
@@ -243,11 +238,9 @@ public class BillByMeter {
       lescoTableModel.addRow(lescoRowData);
       lescoBillTable = new JTable(lescoTableModel);
 
-      // Add lescoBillTable to the lescoScrollPane and then to the mainPanel
       lescoScrollPane = new JScrollPane(lescoBillTable);
-      mainPanel.add(lescoScrollPane, BorderLayout.SOUTH); // Adjust the layout if needed
+      mainPanel.add(lescoScrollPane, BorderLayout.SOUTH);
 
-      // Don't forget to revalidate and repaint
       mainPanel.revalidate();
       mainPanel.repaint();
     }

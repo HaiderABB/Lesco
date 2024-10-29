@@ -18,7 +18,7 @@ public class LoginFrame {
 
   public JFrame mainFrame;
   public JTextField JUsernameField;
-  JPasswordField JPasswordField; // Changed to JPasswordField
+  JPasswordField JPasswordField;
   JButton JSubmitButton;
   JLabel JUserLabel;
   JLabel JPassLabel;

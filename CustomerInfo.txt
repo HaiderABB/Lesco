@@ -1,1 +1,4 @@
-10,3520105043723,Haider Abbas Moazzam,Askari 10,03219306126,Commercial,Single Phase,21/10/24,0.0,0.0
+11,3520105043723,Haider Abbas Moazzam,Askari 10,03219306126,Domestic,Single Phase,29/10/24,0.0,0.0
+12,3520114062474,Meesum Ali Moazzam,Askari 11,03344517861,Commercial,Three Phase,29/10/24,0.0,0.0
+13,3520114062475,Meesum Ali Moazzam,Askari 11,03344577862,Commercial, Single Phase,29/10/24,0.0,0.0
+

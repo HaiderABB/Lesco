@@ -51,24 +51,21 @@ public class ViewExpiry extends DashboardSuper {
   }
 
   public void initTable() {
-    // Initialize the table model with non-editable cells
     DefaultTableModel TaxesModel = new DefaultTableModel(ColumnNames, 0) {
       @Override
       public boolean isCellEditable(int row, int column) {
-        return false; // Makes all cells non-editable
+        return false;
       }
     };
 
-    ExpiredTable = new JTable(TaxesModel); // Initialize ExpiredTable with the model
+    ExpiredTable = new JTable(TaxesModel);
 
     loadTaxesData(TaxesModel);
 
-    // Initialize the scroll pane with the table
     scrollPane = new JScrollPane(ExpiredTable);
     scrollPane.setBorder(BorderFactory.createEmptyBorder(70, 10, 10, 10));
     scrollPane.setBackground(EPcolor);
 
-    // Initialize original indices array
     originalIndices = new int[Expired.size()];
     for (int i = 0; i < Expired.size(); i++) {
       originalIndices[i] = i;
@@ -76,7 +73,6 @@ public class ViewExpiry extends DashboardSuper {
   }
 
   private void loadTaxesData(DefaultTableModel model) {
-    // Load expired CNIC data into the table model
     Expired = nadra.getExpired();
     for (NadraData c : Expired) {
       Object[] row = new Object[3];
@@ -89,7 +85,7 @@ public class ViewExpiry extends DashboardSuper {
 
   private void filterCustomerData(String searchTerm) {
     DefaultTableModel model = (DefaultTableModel) ExpiredTable.getModel();
-    model.setRowCount(0); // Clear existing rows
+    model.setRowCount(0);
 
     int currentIndex = 0;
     for (NadraData c : Expired) {
@@ -100,7 +96,6 @@ public class ViewExpiry extends DashboardSuper {
         row[2] = c.getExpiryDate();
         model.addRow(row);
 
-        // Update original indices
         if (currentIndex < originalIndices.length) {
           originalIndices[currentIndex] = Expired.indexOf(c);
         }

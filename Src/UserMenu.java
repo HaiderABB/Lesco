@@ -132,8 +132,7 @@ public class UserMenu {
               ID = scanner.nextInt();
               scanner.nextLine();
             }
-            // C.printCustomer(ID, cnic);
-            // Bill.printBill(ID);
+
           } else if (input == 2) {
             System.out.println("Enter Meter Type (Single Phase or Three Phase): ");
             String meterType = scanner.nextLine();
@@ -192,12 +191,7 @@ public class UserMenu {
 
           System.out.println("------------------------------------");
           System.out.println("Your Billing Details are as follows:");
-          // if (!Bill.printBill(ID)) {
-          // System.out.println("Bill not found for this month:");
-          // } else {
-          // // C.printCustomer(ID, cnic);
-          // }
-          // Bill.WriteToFile();
+
           break;
         case 3:
           System.out.println("Logging out...");

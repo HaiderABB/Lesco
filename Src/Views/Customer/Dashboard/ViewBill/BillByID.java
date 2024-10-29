@@ -89,7 +89,7 @@ public class BillByID extends DashboardSuper {
         initBillsTable();
 
         mainPanel.removeAll();
-        JPanel combinedPanel = new JPanel(new GridLayout(2, 1)); // Combining both tables
+        JPanel combinedPanel = new JPanel(new GridLayout(2, 1));
         combinedPanel.add(scrollPane1);
         combinedPanel.add(scrollPane2);
 
@@ -133,6 +133,6 @@ public class BillByID extends DashboardSuper {
   }
 
   public static void main(String[] args) {
-    // You can test the UI by running this method if needed
+
   }
 }

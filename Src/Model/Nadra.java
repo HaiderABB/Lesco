@@ -84,7 +84,6 @@ public class Nadra implements FileHandling {
 
     ArrayList<NadraData> expiringCNICs = new ArrayList<>();
 
-    // Formatter for two-digit year (yy instead of yyyy)
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
     LocalDate today = LocalDate.now();
