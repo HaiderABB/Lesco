@@ -25,7 +25,7 @@ public class EmployeeOperations {
   Pattern pattern = Pattern.compile(AddressRegex);
   Pattern namePattern = Pattern.compile(nameRegex);
 
-  EmployeeOperations() {
+  public EmployeeOperations() {
   }
 
   public EmployeeOperations(Customers C, MeterInfo M, Bills B, Nadra N) {

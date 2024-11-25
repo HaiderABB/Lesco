@@ -20,7 +20,7 @@ public class Billing {
   protected Double RegularUnitsPrice;
   protected Double PeakUnitsPrice;
 
-  Billing() {
+  public Billing() {
   }
 
   public Billing(int ID, Double currentRegularReading, Double currentPeakReading,

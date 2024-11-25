@@ -6,15 +6,15 @@ public class Meter {
   protected BigInteger CNIC;
   protected int number;
 
-  Meter() {
+  public Meter() {
   }
 
-  Meter(BigInteger CNIC) {
+  public Meter(BigInteger CNIC) {
     this.CNIC = CNIC;
     number = 1;
   }
 
-  Meter(String CNIC, int number) {
+  public Meter(String CNIC, int number) {
     BigInteger n = new BigInteger(CNIC);
     this.CNIC = n;
     this.number = number;

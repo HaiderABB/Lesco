@@ -210,10 +210,19 @@ public class Customers implements FileHandling {
     return false;
   }
 
+  public Customer getCustomerById(int id) {
+    for (Customer c : customers) {
+      if (c.ID == id) {
+        return c;
+      }
+    }
+    return null;
+  }
+
   public boolean CheckName(String name) {
 
     for (Customer c : customers) {
-      if (c.getName() == name) {
+      if (c.getName().equals(name)) {
         return true;
       }
     }
@@ -223,7 +232,7 @@ public class Customers implements FileHandling {
   public boolean CheckAddress(String Address) {
 
     for (Customer c : customers) {
-      if (c.getAddress() == Address) {
+      if (c.getAddress().equals(Address)) {
         return true;
       }
     }
@@ -233,7 +242,7 @@ public class Customers implements FileHandling {
   public boolean CheckPhone(String Phone) {
 
     for (Customer c : customers) {
-      if (c.getPhoneNumber() == Phone) {
+      if (c.getPhoneNumber().equals(Phone)) {
         return true;
       }
     }
