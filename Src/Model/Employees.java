@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class Employees implements FileHandling {
 
-  protected HashMap<String, String> EmployeesData = new HashMap<String, String>();
+  public HashMap<String, String> EmployeesData = new HashMap<String, String>();
   final String EMPLOYEE_DATA = "EmployeesData.txt";
   String usernameRegex = "^[a-zA-Z][a-zA-Z0-9_.]{4,14}$";
 

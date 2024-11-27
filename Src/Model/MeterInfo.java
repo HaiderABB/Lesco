@@ -9,8 +9,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class MeterInfo implements FileHandling {
-  protected ArrayList<Meter> Meters = new ArrayList<Meter>();
-  protected final String filename = "Meter.txt";
+  public ArrayList<Meter> Meters = new ArrayList<Meter>();
+  public final String filename = "Meter.txt";
 
   public MeterInfo() {
     ReadFromFile();
@@ -52,9 +52,13 @@ public class MeterInfo implements FileHandling {
         return false;
       }
     }
-    Meter mn = new Meter(CNIC);
-    Meters.add(mn);
-    return true;
+    if (Meters.size() == 0) {
+      Meter mn = new Meter(CNIC);
+      Meters.add(mn);
+      return true;
+    }
+
+    return false;
   }
 
   public void ReadFromFile() {

@@ -16,10 +16,10 @@ public class Customer {
   protected Double RegularUnits;
   protected Double PeakUnits;
 
-  Customer() {
+  public Customer() {
   }
 
-  Customer(BigInteger CNIC, String name, String Address, String PhoneNumber, String CustomerType,
+  public Customer(BigInteger CNIC, String name, String Address, String PhoneNumber, String CustomerType,
       String MeterType, int current) {
 
     this.CNIC = CNIC;

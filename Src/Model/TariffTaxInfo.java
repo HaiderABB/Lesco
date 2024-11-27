@@ -9,11 +9,12 @@ public class TariffTaxInfo {
   protected Double FixedCharges;
   protected String CustomerType;
 
-  TariffTaxInfo() {
+  public TariffTaxInfo() {
 
   }
 
-  TariffTaxInfo(String Phase, Double RegularUnitsPrice, Double PeakUnitsPrice, Double TaxRate, Double FixedCharges,
+  public TariffTaxInfo(String Phase, Double RegularUnitsPrice, Double PeakUnitsPrice, Double TaxRate,
+      Double FixedCharges,
       String CustomerType) {
     this.Phase = Phase;
     this.RegularUnitsPrice = RegularUnitsPrice;
