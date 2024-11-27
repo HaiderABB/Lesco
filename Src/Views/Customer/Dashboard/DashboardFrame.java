@@ -116,7 +116,7 @@ public class DashboardFrame extends DashboardSuper {
     JLogout.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-
+        System.out.println("Logout button clicked!");
         mainFrame.dispose();
       }
     });
@@ -160,7 +160,7 @@ public class DashboardFrame extends DashboardSuper {
   void initSubPanel() {
     SubPanel = new JPanel();
     SubPanel.setLayout(new BorderLayout());
-
+    SubPanel.setName("SubPanel");
     SubPanel.setBackground(EPcolor);
     SubPanel.setForeground(MPcolor);
 
