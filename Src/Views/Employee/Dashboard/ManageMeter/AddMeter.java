@@ -11,18 +11,21 @@ import java.math.BigInteger;
 import javax.swing.*;
 
 public class AddMeter extends DashboardSuper {
-  public JPanel MainPanel;
-  private JTextField cnicField;
-  private JTextField nameField;
-  private JTextField addressField;
-  private JTextField phoneNumberField;
-  private JTextField customerTypeField;
-  private JTextField meterTypeField;
-  private JButton addButton;
 
-  private Customers customerData;
-  private Nadra nadraData;
-  private MeterInfo meterInfo;
+  private boolean successMessageShown = false;
+
+  public JPanel MainPanel;
+  public JTextField cnicField;
+  public JTextField nameField;
+  public JTextField addressField;
+  public JTextField phoneNumberField;
+  public JTextField customerTypeField;
+  public JTextField meterTypeField;
+  public JButton addButton;
+
+  public Customers customerData;
+  public Nadra nadraData;
+  public MeterInfo meterInfo;
 
   public AddMeter(Customers customerData, Nadra nadraData, MeterInfo meterInfo) {
     this.customerData = customerData;
@@ -31,7 +34,7 @@ public class AddMeter extends DashboardSuper {
     init();
   }
 
-  private void init() {
+  public void init() {
     MainPanel = new JPanel();
     MainPanel.setLayout(new GridBagLayout());
     MainPanel.setBackground(EPcolor);
@@ -111,7 +114,11 @@ public class AddMeter extends DashboardSuper {
     addButton.addActionListener(new AddButtonListener());
   }
 
-  private class AddButtonListener implements ActionListener {
+  public boolean getSuccessMessageShown() {
+    return successMessageShown;
+  }
+
+  public class AddButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
       String cnic = cnicField.getText().trim();
@@ -133,6 +140,7 @@ public class AddMeter extends DashboardSuper {
         if (meterInfo.getMeterNumber(userCNIC) == 3) {
           JOptionPane.showMessageDialog(MainPanel, "Max Meter Limit Reached!");
         } else {
+          successMessageShown = true;
           JOptionPane.showMessageDialog(MainPanel, "Meter and Customer added successfully!");
           nadraData.WriteToFile();
           meterInfo.WriteToFile();
@@ -145,7 +153,7 @@ public class AddMeter extends DashboardSuper {
       }
     }
 
-    private boolean validateInputs(String cnic, String name, String address, String phoneNumber, String customerType,
+    public boolean validateInputs(String cnic, String name, String address, String phoneNumber, String customerType,
         String meterType) {
       if (cnic.isEmpty() || !cnic.matches(CNICregex)) {
         JOptionPane.showMessageDialog(MainPanel, "Invalid CNIC format.");
@@ -180,7 +188,7 @@ public class AddMeter extends DashboardSuper {
       return true;
     }
 
-    private void clearFields() {
+    public void clearFields() {
       cnicField.setText("");
       nameField.setText("");
       addressField.setText("");

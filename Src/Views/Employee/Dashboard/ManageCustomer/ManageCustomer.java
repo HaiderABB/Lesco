@@ -22,9 +22,9 @@ public class ManageCustomer extends DashboardSuper {
       "ID", "CNIC", "Name", "Address", "Phone", "Customer Type", "Meter Type",
       "Connection Date", "Regular Reading", "Peak Reading", "Update", "Delete"
   };
-  Customers customerData;
-  MeterInfo meterInfo;
-  private int[] originalIndices;
+  public Customers customerData;
+  public MeterInfo meterInfo;
+  public int[] originalIndices;
 
   public ManageCustomer(Customers customerData, MeterInfo meterInfo) {
     this.customerData = customerData;
@@ -71,7 +71,7 @@ public class ManageCustomer extends DashboardSuper {
     scrollPane.setBackground(EPcolor);
   }
 
-  private void loadCustomerData(DefaultTableModel model) {
+  public void loadCustomerData(DefaultTableModel model) {
     for (Customer c : customerData.customers) {
       Object[] row = new Object[12];
       row[0] = c.getID();
@@ -90,7 +90,7 @@ public class ManageCustomer extends DashboardSuper {
     }
   }
 
-  private void filterCustomerData(String searchTerm) {
+  public void filterCustomerData(String searchTerm) {
     DefaultTableModel model = (DefaultTableModel) CustomerTable.getModel();
     model.setRowCount(0);
     int currentIndex = 0;
@@ -129,11 +129,11 @@ public class ManageCustomer extends DashboardSuper {
     }
   }
 
-  class ButtonEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
-    private JButton button;
-    private String label;
-    private boolean isUpdate;
-    private int row;
+  public class ButtonEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+    public JButton button;
+    public String label;
+    public boolean isUpdate;
+    public int row;
 
     public ButtonEditor(String buttonLabel, boolean isUpdate) {
       this.isUpdate = isUpdate;
@@ -164,7 +164,7 @@ public class ManageCustomer extends DashboardSuper {
       fireEditingStopped();
     }
 
-    private boolean validateAndUpdateCustomer(Customer customer, JTextField[] fields) {
+    public boolean validateAndUpdateCustomer(Customer customer, JTextField[] fields) {
       try {
 
         if (fields[2].getText().matches(NameRegex.pattern())) {
@@ -214,7 +214,7 @@ public class ManageCustomer extends DashboardSuper {
       }
     }
 
-    private void updateCustomerData() {
+    public void updateCustomerData() {
       Customer currentCustomer = customerData.customers.get(originalIndices[row]);
       JTextField[] fields = new JTextField[ColumnNames.length - 2];
       JPanel panel = new JPanel(new GridLayout(fields.length, 2));
@@ -259,7 +259,7 @@ public class ManageCustomer extends DashboardSuper {
       }
     }
 
-    private void deleteCustomerData() {
+    public void deleteCustomerData() {
       int confirmation = JOptionPane.showConfirmDialog(button, "Are you sure you want to delete this customer?");
       if (confirmation == JOptionPane.YES_OPTION) {
 

@@ -5,8 +5,8 @@ import java.awt.GridLayout;
 import javax.swing.*;
 
 public class PrintReportPanel extends JPanel {
-  private JTextField reportIdField;
-  private JButton printButton;
+  public JTextField reportIdField;
+  public JButton printButton;
 
   Bills B;
 

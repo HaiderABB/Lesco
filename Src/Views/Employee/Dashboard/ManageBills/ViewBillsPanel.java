@@ -26,9 +26,9 @@ public class ViewBillsPanel extends DashboardSuper {
       "Peak Units Price", "Update", "Delete"
   };
 
-  private int[] originalIndices;
+  public int[] originalIndices;
   public Bills BillsData;
-  private HashMap<Integer, Integer> mostRecentBillIndices;
+  public HashMap<Integer, Integer> mostRecentBillIndices;
 
   public ViewBillsPanel(Bills B) {
     BillsData = B;
@@ -80,7 +80,7 @@ public class ViewBillsPanel extends DashboardSuper {
     scrollPane.setBackground(EPcolor);
   }
 
-  private void loadBillsData(DefaultTableModel model) {
+  public void loadBillsData(DefaultTableModel model) {
     mostRecentBillIndices = new HashMap<>();
     for (int i = 0; i < BillsData.CustomerBills.size(); i++) {
       Billing bill = BillsData.CustomerBills.get(i);
@@ -119,17 +119,17 @@ public class ViewBillsPanel extends DashboardSuper {
     }
   }
 
-  private LocalDate parseDate(String dateStr) {
+  public LocalDate parseDate(String dateStr) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     return LocalDate.parse(dateStr, formatter);
   }
 
-  private boolean isBillMoreRecent(LocalDate currentBillDate, String existingBillDateStr) {
+  public boolean isBillMoreRecent(LocalDate currentBillDate, String existingBillDateStr) {
     LocalDate existingBillDate = parseDate(existingBillDateStr);
     return currentBillDate.isAfter(existingBillDate);
   }
 
-  private void filterBillsData(String searchTerm) {
+  public void filterBillsData(String searchTerm) {
     DefaultTableModel model = (DefaultTableModel) BillsTable.getModel();
     model.setRowCount(0);
     int currentIndex = 0;
@@ -165,10 +165,10 @@ public class ViewBillsPanel extends DashboardSuper {
   }
 
   class ButtonEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
-    private JButton button;
-    private String label;
-    private boolean isUpdate;
-    private int row;
+    public JButton button;
+    public String label;
+    public boolean isUpdate;
+    public int row;
 
     public ButtonEditor(String buttonLabel, boolean isUpdate) {
       this.isUpdate = isUpdate;
@@ -201,7 +201,7 @@ public class ViewBillsPanel extends DashboardSuper {
       fireEditingStopped();
     }
 
-    private void updateBillsData() {
+    public void updateBillsData() {
       Billing bill = BillsData.CustomerBills.get(originalIndices[row]);
       JTextField paidStatusField = new JTextField(bill.getPaidStatus());
       int result = JOptionPane.showConfirmDialog(button, paidStatusField, "Update Paid Status",
@@ -227,7 +227,7 @@ public class ViewBillsPanel extends DashboardSuper {
       }
     }
 
-    private void deleteBillsData() {
+    public void deleteBillsData() {
       int confirmation = JOptionPane.showConfirmDialog(button, "Are you sure you want to delete this bill?",
           "Confirm Deletion", JOptionPane.YES_NO_OPTION);
       if (confirmation == JOptionPane.YES_OPTION) {
@@ -242,7 +242,7 @@ public class ViewBillsPanel extends DashboardSuper {
 
     }
 
-    private void updateMostRecentBillIndices() {
+    public void updateMostRecentBillIndices() {
       mostRecentBillIndices.clear();
       for (int i = 0; i < BillsData.CustomerBills.size(); i++) {
         Billing bill = BillsData.CustomerBills.get(i);

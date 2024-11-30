@@ -92,7 +92,7 @@ public class ManageTaxes extends DashboardSuper {
     }
   }
 
-  private void filterCustomerData(String searchTerm) {
+  public void filterCustomerData(String searchTerm) {
     DefaultTableModel model = (DefaultTableModel) TaxesTable.getModel();
     model.setRowCount(0);
     int currentIndex = 0;

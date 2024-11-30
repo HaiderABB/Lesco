@@ -8,11 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class AddBillPanel extends JPanel {
-  private JTextField customerIdField;
-  private JButton submitButton;
+  public JTextField customerIdField;
+  public JButton submitButton;
 
-  Customers customerData;
-  Bills billingData;
+  public Customers customerData;
+  public Bills billingData;
 
   public AddBillPanel(Customers C, Bills B) {
     this.customerData = C;
@@ -85,7 +85,7 @@ public class AddBillPanel extends JPanel {
     });
   }
 
-  private boolean validateInputs(String customerId) {
+  public boolean validateInputs(String customerId) {
     if (customerId.length() == 0) {
       JOptionPane.showMessageDialog(this, "Customer ID cannot be empty");
       return false;
@@ -99,7 +99,7 @@ public class AddBillPanel extends JPanel {
     return true;
   }
 
-  private void clearFields() {
+  public void clearFields() {
     customerIdField.setText("");
   }
 }

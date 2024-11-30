@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Bills implements FileHandling {
 
@@ -73,6 +74,10 @@ public class Bills implements FileHandling {
       System.out.println(t.Phase + " , " + t.RegularUnitsPrice + " , " + t.PeakUnitsPrice + " , " + t.TaxRate + " , "
           + t.FixedCharges);
     }
+  }
+
+  public void setCustomerBills(List<Billing> billingList) {
+    CustomerBills = (ArrayList<Billing>) billingList;
   }
 
   public void ReadFromFile() {
