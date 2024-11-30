@@ -17,17 +17,17 @@ public class LoginFrame {
 
   public JFrame mainFrame;
   public JTextField JUsernameField;
-  JPasswordField JPasswordField; // Changed to JPasswordField
-  JButton JSubmitButton;
-  JLabel JUserLabel;
-  JLabel JPassLabel;
-  JPanel inputPanel;
+  public JPasswordField JPasswordField; // Changed to JPasswordField
+  public JButton JSubmitButton;
+  public JLabel JUserLabel;
+  public JLabel JPassLabel;
+  public JPanel inputPanel;
 
-  Customers customerData;
-  Bills billData;
+  public Customers customerData;
+  public Bills billData;
 
-  Nadra nadraData;
-  DashboardFrame D;
+  public Nadra nadraData;
+  public DashboardFrame D;
 
   public LoginFrame(DashboardFrame DF, Bills B,
       Customers C,

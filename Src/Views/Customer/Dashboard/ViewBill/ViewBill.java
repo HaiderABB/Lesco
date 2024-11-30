@@ -14,9 +14,9 @@ public class ViewBill {
   public JButton ViewBillByID;
   public JButton ViewBillByMeter;
 
-  private JPanel cardPanel;
-  private BillByID BillByIDPanel;
-  private BillByMeter BillByMeterPanel;
+  public JPanel cardPanel;
+  public BillByID BillByIDPanel;
+  public BillByMeter BillByMeterPanel;
   public BigInteger cnic;
 
   Customers customerData;
@@ -32,7 +32,7 @@ public class ViewBill {
     init();
   }
 
-  private void init() {
+  public void init() {
     MainPanel = new JPanel();
     MainPanel.setLayout(new BorderLayout());
 
@@ -75,7 +75,7 @@ public class ViewBill {
 
   }
 
-  private void switchPanel(JPanel newPanel) {
+  public void switchPanel(JPanel newPanel) {
     cardPanel.removeAll();
     cardPanel.add(newPanel, BorderLayout.CENTER);
     cardPanel.revalidate();

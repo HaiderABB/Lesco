@@ -17,7 +17,7 @@ public class BillByID extends DashboardSuper {
   public JPanel CustomerPanel;
   public JPanel BillsPanel;
 
-  private JTextField userIDField;
+  public JTextField userIDField;
 
   public JTable CustomerTable;
   public JTable BillTable;
@@ -32,11 +32,11 @@ public class BillByID extends DashboardSuper {
   public JScrollPane scrollPane1;
   public JScrollPane scrollPane2;
 
-  private JLabel messageLabel;
+  public JLabel messageLabel;
   BigInteger cnic;
   public Customers C;
   public Bills B;
-  int userID;
+  public int userID;
 
   public BillByID(Customers C, BigInteger cnic, Bills B) {
     this.cnic = cnic;
@@ -45,7 +45,7 @@ public class BillByID extends DashboardSuper {
     init();
   }
 
-  private void init() {
+  public void init() {
     mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
@@ -74,7 +74,7 @@ public class BillByID extends DashboardSuper {
     mainPanel.add(messageLabel, BorderLayout.SOUTH);
   }
 
-  private void validateAndSubmit() {
+  public void validateAndSubmit() {
     try {
       userID = Integer.parseInt(userIDField.getText().trim());
 
@@ -111,7 +111,7 @@ public class BillByID extends DashboardSuper {
     scrollPane1.setBackground(EPcolor);
   }
 
-  private void loadCustomerData(DefaultTableModel model) {
+  public void loadCustomerData(DefaultTableModel model) {
     Object[] row = new Object[7];
     C.printCustomer(userID, cnic, row);
     model.addRow(row);
@@ -126,7 +126,7 @@ public class BillByID extends DashboardSuper {
     scrollPane2.setBackground(EPcolor);
   }
 
-  private void loadBillsData(DefaultTableModel model) {
+  public void loadBillsData(DefaultTableModel model) {
     Object[] row = new Object[10];
     B.printBill(userID, row);
     model.addRow(row);

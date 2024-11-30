@@ -13,10 +13,10 @@ import javax.swing.table.DefaultTableModel;
 public class BillByMeter {
   public JPanel mainPanel;
 
-  private JTextField regularReadingField;
-  private JTextField peakReadingField;
-  private JComboBox<String> meterTypeComboBox;
-  private JComboBox<String> customerTypeComboBox;
+  public JTextField regularReadingField;
+  public JTextField peakReadingField;
+  public JComboBox<String> meterTypeComboBox;
+  public JComboBox<String> customerTypeComboBox;
 
   public String[] SinglePhaseDomestic = {
       "Regular Units Price", "Tax Rate", "Fixed Charges", "Meter Reading", "Sales Tax", "Total Amount"
@@ -42,13 +42,13 @@ public class BillByMeter {
       "Fixed Charges", "Total Amount", "Due Date", "Payment Date", "Tax Rate"
   };
 
-  private JLabel messageLabel;
-  private JTable billTable;
-  private JTable customerTable; // New table for customer data
-  private JTable lescoBillTable; // New table for LESCO billing information
-  private JScrollPane scrollPane;
-  private JScrollPane customerScrollPane;
-  private JScrollPane lescoScrollPane; // New scroll pane for LESCO billing information
+  public JLabel messageLabel;
+  public JTable billTable;
+  public JTable customerTable; // New table for customer data
+  public JTable lescoBillTable; // New table for LESCO billing information
+  public JScrollPane scrollPane;
+  public JScrollPane customerScrollPane;
+  public JScrollPane lescoScrollPane; // New scroll pane for LESCO billing information
 
   public Bills bill;
   public Customers customerData;
@@ -63,7 +63,7 @@ public class BillByMeter {
     init();
   }
 
-  private void init() {
+  public void init() {
     mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
@@ -122,7 +122,7 @@ public class BillByMeter {
     mainPanel.add(messageLabel, BorderLayout.SOUTH);
   }
 
-  private void validateAndSubmit() {
+  public void validateAndSubmit() {
     String meterType = (String) meterTypeComboBox.getSelectedItem();
     String customerType = (String) customerTypeComboBox.getSelectedItem();
     double regularReading, peakReading = 0.0;
@@ -162,7 +162,7 @@ public class BillByMeter {
     }
   }
 
-  private void displayBillTable(String meterType, String customerType) {
+  public void displayBillTable(String meterType, String customerType) {
     String[] columns = {};
     if (meterType.equals("Single Phase") && customerType.equals("Domestic")) {
       columns = SinglePhaseDomestic;
@@ -214,7 +214,7 @@ public class BillByMeter {
     messageLabel.setText("Success! Table displayed based on " + meterType + " and " + customerType);
   }
 
-  private void displayCustomerTable() {
+  public void displayCustomerTable() {
     DefaultTableModel customerTableModel = new DefaultTableModel(CustomerColumnNames, 0);
     Object[] customerRowData = new Object[CustomerColumnNames.length];
 
@@ -229,7 +229,7 @@ public class BillByMeter {
     mainPanel.repaint();
   }
 
-  private void displayLescoBillTable(double regularReading, double peakReading, String meterType, String customerType) {
+  public void displayLescoBillTable(double regularReading, double peakReading, String meterType, String customerType) {
 
     DefaultTableModel lescoTableModel = new DefaultTableModel(BillColumnNames, 0);
     Object[] lescoRowData = new Object[BillColumnNames.length];
